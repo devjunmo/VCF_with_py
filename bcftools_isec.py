@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from enum import Enum
 from class_input_from_csv import MakePairInputList
+from class_bcftools_isec import Mk_vcf_intersection
 
 
 # os.system('clear')
@@ -69,40 +70,42 @@ obj = MakePairInputList(pair_path, snp_path, indel_path, enum_data)
 obj.trim_pair_df()
 pair_names_df = obj.pair_info_df
 
+isec_obj = Mk_vcf_intersection()
+
 # print(pair_names_df)
 
 # exit(0)
 
-for rows in pair_names_df.itertuples():
+# for rows in pair_names_df.itertuples():
 
-    snp_teratoma_data_path = INPUT_DIR + PREFIX_SNP + rows[1] + '.vcf.gz'
-    snp_origin_data = INPUT_DIR + PREFIX_SNP + rows[2] + '.vcf.gz'
+#     snp_teratoma_data_path = INPUT_DIR + PREFIX_SNP + rows[1] + '.vcf.gz'
+#     snp_origin_data = INPUT_DIR + PREFIX_SNP + rows[2] + '.vcf.gz'
 
-    indel_teratoma_data_path = INPUT_DIR + PREFIX_INDEL + rows[1] + '.vcf.gz'
-    indel_origin_data = INPUT_DIR + PREFIX_INDEL + rows[2] + '.vcf.gz'
+#     indel_teratoma_data_path = INPUT_DIR + PREFIX_INDEL + rows[1] + '.vcf.gz'
+#     indel_origin_data = INPUT_DIR + PREFIX_INDEL + rows[2] + '.vcf.gz'
 
-    output_dir_name = rows[1] + '_' + rows[2]
+#     output_dir_name = rows[1] + '_' + rows[2]
 
-    snp_output_dir = INPUT_DIR + root_output_dir_name_snp + output_dir_name
-    indel_output_dir = INPUT_DIR + root_output_dir_name_indel + output_dir_name
+#     snp_output_dir = INPUT_DIR + root_output_dir_name_snp + output_dir_name
+#     indel_output_dir = INPUT_DIR + root_output_dir_name_indel + output_dir_name
 
-    if os.path.isdir(snp_output_dir) is False:
-        if os.path.isdir(INPUT_DIR + root_output_dir_name_snp) is False:
-            os.mkdir(INPUT_DIR + root_output_dir_name_snp)
-        os.mkdir(snp_output_dir)
-    if os.path.isdir(indel_output_dir) is False:
-        if os.path.isdir(INPUT_DIR + root_output_dir_name_indel) is False:
-            os.mkdir(INPUT_DIR + root_output_dir_name_indel)
-        os.mkdir(indel_output_dir)
+#     if os.path.isdir(snp_output_dir) is False:
+#         if os.path.isdir(INPUT_DIR + root_output_dir_name_snp) is False:
+#             os.mkdir(INPUT_DIR + root_output_dir_name_snp)
+#         os.mkdir(snp_output_dir)
+#     if os.path.isdir(indel_output_dir) is False:
+#         if os.path.isdir(INPUT_DIR + root_output_dir_name_indel) is False:
+#             os.mkdir(INPUT_DIR + root_output_dir_name_indel)
+#         os.mkdir(indel_output_dir)
     
 
-    if is_only_PASS:
-        sp.call(f"bcftools isec -f {filter_comp} -p {snp_output_dir}/ {snp_teratoma_data_path} {snp_origin_data}", shell=True)
-        sp.call(f"bcftools isec -f {filter_comp} -p {indel_output_dir}/ {indel_teratoma_data_path} {indel_origin_data}", shell=True)
+#     if is_only_PASS:
+#         sp.call(f"bcftools isec -f {filter_comp} -p {snp_output_dir}/ {snp_teratoma_data_path} {snp_origin_data}", shell=True)
+#         sp.call(f"bcftools isec -f {filter_comp} -p {indel_output_dir}/ {indel_teratoma_data_path} {indel_origin_data}", shell=True)
     
-    else:
-        sp.call(f"bcftools isec -p {snp_output_dir}/ {snp_teratoma_data_path} {snp_origin_data}", shell=True)
-        sp.call(f"bcftools isec -p {indel_output_dir}/ {indel_teratoma_data_path} {indel_origin_data}", shell=True)
+#     else:
+#         sp.call(f"bcftools isec -p {snp_output_dir}/ {snp_teratoma_data_path} {snp_origin_data}", shell=True)
+#         sp.call(f"bcftools isec -p {indel_output_dir}/ {indel_teratoma_data_path} {indel_origin_data}", shell=True)
 
     
 
