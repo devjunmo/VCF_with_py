@@ -70,7 +70,11 @@ obj = MakePairInputList(pair_path, snp_path, indel_path, enum_data)
 obj.trim_pair_df()
 pair_names_df = obj.pair_info_df
 
-isec_obj = Mk_vcf_intersection()
+isec_obj = Mk_vcf_intersection(pair_names_df, INPUT_DIR, PREFIX_SNP, PREFIX_INDEL, \
+                                root_output_dir_name_snp, root_output_dir_name_indel, \
+                                _is_only_PASS = is_only_PASS, _filter_comp = filter_comp)
+
+isec_obj.run_isec()
 
 # print(pair_names_df)
 

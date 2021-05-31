@@ -9,17 +9,14 @@ import subprocess as sp
 class Mk_vcf_intersection():
 
     def __init__(self, _pair_names_df, _input_dir, \
-                _SNP_prefix_path_vcf_T, _SNP_prefix_path_vcf_O, \
-                _INDEL_prefix_path_vcf_T, _INDEL_prefix_path_vcf_O, \
+                _SNP_path_prefix, _INDEL_path_prefix, \
                 _root_output_dir_name_snp, _root_output_dir_name_indel, \
                 _is_only_PASS=True, _filter_comp="PASS"):
 
         self.pair_names_df = _pair_names_df
         self.INPUT_DIR = _input_dir
-        self.snp_prefix_vcf_T = _SNP_prefix_path_vcf_T
-        self.snp_prefix_vcf_O = _SNP_prefix_path_vcf_O
-        self.indel_prefix_vcf_T = _INDEL_prefix_path_vcf_T
-        self.indel_prefix_vcf_O = _INDEL_prefix_path_vcf_O
+        self._SNP_path_prefix = _SNP_path_prefix
+        self._INDEL_path_prefix = _INDEL_path_prefix
         self.root_output_dir_name_snp = _root_output_dir_name_snp
         self.root_output_dir_name_indel = _root_output_dir_name_indel
         self._is_only_PASS = _is_only_PASS
@@ -28,11 +25,11 @@ class Mk_vcf_intersection():
 
     def run_isec(self):
         for rows in self.pair_names_df.itertuples():
-            snp_tumor_data_path = self.INPUT_DIR + self.snp_prefix_vcf_T + rows[1] + '.vcf.gz'
-            snp_origin_data = self.INPUT_DIR + self.snp_prefix_vcf_O + rows[2] + '.vcf.gz'
+            snp_tumor_data_path = self.INPUT_DIR + self._SNP_path_prefix + rows[1] + '.vcf.gz'
+            snp_origin_data = self.INPUT_DIR + self._SNP_path_prefix + rows[2] + '.vcf.gz'
 
-            indel_teratoma_data_path = self.INPUT_DIR + self.indel_prefix_vcf_T + rows[1] + '.vcf.gz'
-            indel_origin_data = self.INPUT_DIR + self.indel_prefix_vcf_O + rows[2] + '.vcf.gz'
+            indel_teratoma_data_path = self.INPUT_DIR + self._INDEL_path_prefix + rows[1] + '.vcf.gz'
+            indel_origin_data = self.INPUT_DIR + self._INDEL_path_prefix + rows[2] + '.vcf.gz'
 
             output_dir_name = rows[1] + '_' + rows[2]
 
