@@ -17,3 +17,6 @@ gather_specific_isec_data.py로 차집합 or 교집합에 해당하는 vcf파일
 
 
 extract_T_only.py로 1) Tonly와 2) T-specific이긴 한데 Origin이 탈락한 부분을 얻고 / 비율구하고 / 걸린 필터 비율 구하기
+
+
+dp30filter.py로 DP 30미만인 포지션에 DP30 찍어줌. 
