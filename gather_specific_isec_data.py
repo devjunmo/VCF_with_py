@@ -24,15 +24,19 @@ RUN_TYPE = 'INDEL'
 
 # SNP_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/snp_isec/'
 # INDEL_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/indel_isec/'
-SNP_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/snp_isec_include_filtered/'
-INDEL_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/indel_isec_include_filtered/'
+# SNP_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/snp_isec_include_filtered/'
+# INDEL_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/indel_isec_include_filtered/'
+SNP_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/snp_isec_Tsp-pass_and_raw_IPS/'
+INDEL_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/indel_isec_Tsp-pass_and_raw_IPS/'
+# SNP_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/snp_isec_pass_only/'
+# INDEL_INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/indel_isec_pass_only/'
 # OUTPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Teratoma_specifics/'
 
 
-# vcf_name = '0000.vcf' # 0000.vcf : teratoma // 0001.vcf : origin // 0002.vcf : common
+vcf_name = '0000.vcf' # 0000.vcf : teratoma // 0001.vcf : origin // 0002.vcf : T_common // 0003.vcf: O_common
 # vcf_name = '0001.vcf'
 # vcf_name = '0002.vcf'
-vcf_name = '0003.vcf'
+# vcf_name = '0003.vcf'
 
 OUTPUT_ROOT = r'/myData/WES/data/vcf/hard/WES1_210420/'
 
@@ -42,15 +46,20 @@ OUTPUT_ROOT = r'/myData/WES/data/vcf/hard/WES1_210420/'
 # SPECIFIC_DIR = 'incFilter_Teratoma_specifics/'
 # SPECIFIC_DIR = 'incFilter_Origin_specifics/'
 # SPECIFIC_DIR = 'incFilter_Commons_T/'
-SPECIFIC_DIR = 'incFilter_Commons_O/'
+# SPECIFIC_DIR = 'T_only_data/'
+SPECIFIC_DIR = 'Teratoma_specifics_pass_only/'
+# SPECIFIC_DIR = 'Origin_specifics_pass_only/'
+# SPECIFIC_DIR = 'commons_pass_only/'
+
+# SPECIFIC_DIR = 'both_T_and_I_pos_IPS_view/'
 
 OUTPUT_SPECIFIC_DIR = OUTPUT_ROOT + SPECIFIC_DIR
 
 enum_data = TeratomaOrigin
 
 # 얘 잊지마..
-# target_sample_name = enum_data.Teratoma.name
-target_sample_name = enum_data.orgin.name 
+target_sample_name = enum_data.Teratoma.name
+# target_sample_name = enum_data.orgin.name 
 
 ######################################################################################################
 

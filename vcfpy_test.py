@@ -32,9 +32,9 @@ print('\t'.join(header))
 
 # exit(0)
 
-for record in reader_indels:
-    if record.is_snv():
-        continue
+for record in reader_snp:
+    # if record.is_snv():
+    #     continue
     print(record)
     line = [record.CHROM, record.POS, record.REF]
     print(line)
@@ -66,29 +66,29 @@ for record in reader_indels:
     mystr = '\t'.join(map(str, line))
     print(mystr) # 1       874950  T       TCCCTGGAGGACC   0/1
     print(type(mystr)) # <class 'str'>
-    exit(0)
+    break
 
-for record in reader_indels:
-    if record.is_snv():
-        continue
-    line = [record.CHROM, record.POS, record.REF]
-    line += [alt.value for alt in record.ALT]
-    line += [call.data.get('GT') or './.' for call in record.calls] # GT의 값을 받아오거나 ./.을 가져오거나
-    line += [call.data.get('AD') or './.' for call in record.calls]
-    mystr = '\t'.join(map(str, line))
+# for record in reader_indels:
+#     if record.is_snv():
+#         continue
+#     line = [record.CHROM, record.POS, record.REF]
+#     line += [alt.value for alt in record.ALT]
+#     line += [call.data.get('GT') or './.' for call in record.calls] # GT의 값을 받아오거나 ./.을 가져오거나
+#     line += [call.data.get('AD') or './.' for call in record.calls]
+#     mystr = '\t'.join(map(str, line))
 
-mystr
+# mystr
 
-for record in reader_snp:
-    if not record.is_snv():
-        continue
-    line = [record.CHROM, record.POS, record.REF]
-    line += [alt.value for alt in record.ALT]
-    line += [call.data.get('GT') or './.' for call in record.calls]
-    print('\t'.join(map(str, line)))
+# for record in reader_snp:
+#     if not record.is_snv():
+#         continue
+#     line = [record.CHROM, record.POS, record.REF]
+#     line += [alt.value for alt in record.ALT]
+#     line += [call.data.get('GT') or './.' for call in record.calls]
+#     print('\t'.join(map(str, line)))
 
 
-exit(0)
+# exit(0)
 
 
 

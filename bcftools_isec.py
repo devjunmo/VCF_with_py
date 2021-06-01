@@ -41,12 +41,18 @@ INDEL_INPUT_FORMAT = r'hardFiltered_INDEL*.vcf.gz'
 
 
 # input파일의 prefix
-PREFIX_SNP = 'hardFiltered_SNP_'
-PREFIX_INDEL = 'hardFiltered_INDEL_'
-# PREFIX_SNP = 'SNP_'
-# PREFIX_INDEL = 'INDEL_'
-# PREFIX_SNP = 'SNP_cnn_'
-# PREFIX_INDEL = 'INDEL_cnn_'
+# /input/dir/<사 이 부 분 입 력>/name*
+
+PREFIX_SNP_T = r'hardFiltered_SNP_'
+PREFIX_SNP_O = r'hardFiltered_SNP_'
+PREFIX_INDEL_T = r'hardFiltered_INDEL_'
+PREFIX_INDEL_O = r'hardFiltered_INDEL_'
+
+# PREFIX_SNP_T = r'Teratoma_specifics/SNP_'
+# PREFIX_SNP_O = 'hardFiltered_SNP_'
+# PREFIX_INDEL_T = r'Teratoma_specifics/INDEL_'
+# PREFIX_INDEL_O = 'hardFiltered_INDEL_'
+
 
 pair_path = r'/myData/WES/src/Origin_Teratoma_pairs.csv'
 
@@ -54,10 +60,12 @@ enum_data = TeratomaOrigin
 
 filter_comp = 'PASS' # raw vcf일땐 '.' // PASS인것만 사용하겠다
 
-is_only_PASS = False
+is_only_PASS = True
 
-root_output_dir_name_snp = r'snp_isec_include_filtered/'
-root_output_dir_name_indel = r'indel_isec_include_filtered/'
+root_output_dir_name_snp = r'snp_isec_pass_only/'
+root_output_dir_name_indel = r'indel_isec_pass_only/'
+# root_output_dir_name_snp = r'snp_isec_include_filtered/'
+# root_output_dir_name_indel = r'indel_isec_include_filtered/'
 
 is_qsub = False
 
@@ -66,11 +74,14 @@ is_qsub = False
 snp_path = INPUT_DIR + SNP_INPUT_FORMAT
 indel_path = INPUT_DIR + INDEL_INPUT_FORMAT
 
-obj = MakePairInputList(pair_path, snp_path, indel_path, enum_data)
+obj = MakePairInputList(pair_path, snp_path, indel_path, enum_data) # 샘플만 맞으면 아무거나 넣어도 pair name df는 같음
 obj.trim_pair_df()
 pair_names_df = obj.pair_info_df
 
-isec_obj = Mk_vcf_intersection(pair_names_df, INPUT_DIR, PREFIX_SNP, PREFIX_INDEL, \
+# prefix path 파라미터 새로 넣어서 쓸것 (Teratoma, origin prefix 구별)
+isec_obj = Mk_vcf_intersection(pair_names_df, INPUT_DIR, \
+                                PREFIX_SNP_T, PREFIX_SNP_O, \
+                                PREFIX_INDEL_T, PREFIX_INDEL_O, \
                                 root_output_dir_name_snp, root_output_dir_name_indel, \
                                 _is_only_PASS = is_only_PASS, _filter_comp = filter_comp)
 

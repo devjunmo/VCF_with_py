@@ -23,9 +23,9 @@ import glob
 RUN_MODE = 'specific_only' 
 
 
-class TeratomaOrigin(Enum): # csv 파일의 컬럼명 순서로 구성
-    # Teratoma = 0
-    orgin = 1
+class TeratomaOrigin(Enum): # csv 파일의 컬럼명 순서로 구성 / specific_only mode 사용시 하나 빼고 주석처리
+    Teratoma = 0
+    # orgin = 1
 
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/'
 # INPUT_DIR = r'/myData/WES/data/vcf/raw/'
@@ -37,7 +37,10 @@ class TeratomaOrigin(Enum): # csv 파일의 컬럼명 순서로 구성
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/incFilter_Teratoma_specifics/'
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/incFilter_Origin_specifics/'
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/incFilter_commons_T/'
-INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/incFilter_commons_O/'
+# INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/incFilter_commons_O/'
+# INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/T_only_data/'
+# INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/both_T_and_I_pos_IPS_view/'
+INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Teratoma_specifics_pass_only/'
 
 
 # SNP_INPUT_FORMAT = r'hardFiltered_SNP*.vcf.gz'
@@ -63,16 +66,13 @@ PREFIX_SAVE_INDEL = 'subset_INDEL_'
 # PREFIX_SAVE_INDEL = 'raw_subset_INDEL_'
 
 
-SAVE_DIR_NAME = 'subsets/'
+SAVE_DIR_NAME = 'subsets_DP30/'
 # SAVE_DIR_NAME = 'raw_subsets/'
 
 # T-specific일때 IPS파일이 없어서 path list가 모두 삭제되는 현상 발생 해결 목적
 pair_path = r'/myData/WES/src/Origin_Teratoma_pairs.csv'
 
 enum_data = TeratomaOrigin
-
-
-# filter_comp = 'PASS' # raw vcf일땐 '.' // PASS인것만 사용하겠다
 
 is_qsub = False
 
@@ -188,30 +188,30 @@ elif RUN_MODE == 'specific_only':
 
 
 
-elif RUN_MODE == 'T_only':
+# elif RUN_MODE == 'T_only':
 
-    snp_list = glob.glob(snp_path)
-    indel_list = glob.glob(indel_path)
+#     snp_list = glob.glob(snp_path)
+#     indel_list = glob.glob(indel_path)
 
-    if len(snp_list) != len(indel_list):
-        print('error: snp목록과 indel목록의 갯수가 일치하지 않음')
-        exit(1)
+#     if len(snp_list) != len(indel_list):
+#         print('error: snp목록과 indel목록의 갯수가 일치하지 않음')
+#         exit(1)
     
-    for i in range(len(snp_list)):
-        sample_name = snp_list[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-1]
-        sp.call(f"bcftools query -f '%CHROM\t%POS\t%DP\t%MQ\t%QD\t%SOR[\t%GT]\n' {snp_list[i]} > {INPUT_DIR}snpT.tmp", shell=True)
-        sp.call(f"bcftools query -f '%CHROM\t%POS\t%DP\t%MQ\t%QD\t%SOR[\t%GT]\n' {indel_list[i]} > {INPUT_DIR}indT.tmp", shell=True)
+#     for i in range(len(snp_list)):
+#         sample_name = snp_list[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-1]
+#         sp.call(f"bcftools query -f '%CHROM\t%POS\t%DP\t%MQ\t%QD\t%SOR[\t%GT]\n' {snp_list[i]} > {INPUT_DIR}snpT.tmp", shell=True)
+#         sp.call(f"bcftools query -f '%CHROM\t%POS\t%DP\t%MQ\t%QD\t%SOR[\t%GT]\n' {indel_list[i]} > {INPUT_DIR}indT.tmp", shell=True)
 
-        df_text1 = pd.read_csv(f'{INPUT_DIR}snpT.tmp', sep='\t', header=None, \
-            names=header, index_col=None)
-        df_text2 = pd.read_csv(f'{INPUT_DIR}indT.tmp', sep='\t', header=None, \
-            names=header, index_col=None)
+#         df_text1 = pd.read_csv(f'{INPUT_DIR}snpT.tmp', sep='\t', header=None, \
+#             names=header, index_col=None)
+#         df_text2 = pd.read_csv(f'{INPUT_DIR}indT.tmp', sep='\t', header=None, \
+#             names=header, index_col=None)
 
-        # df_text1 = df_text1[df_text1['FILTER'] == filter_comp]
-        # df_text2 = df_text2[df_text2['FILTER'] == filter_comp]
+#         # df_text1 = df_text1[df_text1['FILTER'] == filter_comp]
+#         # df_text2 = df_text2[df_text2['FILTER'] == filter_comp]
 
-        rm_GT_more_than_one(df_text1)
-        rm_GT_more_than_one(df_text2)
+#         rm_GT_more_than_one(df_text1)
+#         rm_GT_more_than_one(df_text2)
         
-        df_text1.to_csv(f'{SAVE_DIR}{PREFIX_SAVE_SNP + sample_name}.csv', header=True, index=False)
-        df_text2.to_csv(f'{SAVE_DIR}{PREFIX_SAVE_INDEL + sample_name}.csv', header=True, index=False)
+#         df_text1.to_csv(f'{SAVE_DIR}{PREFIX_SAVE_SNP + sample_name}.csv', header=True, index=False)
+#         df_text2.to_csv(f'{SAVE_DIR}{PREFIX_SAVE_INDEL + sample_name}.csv', header=True, index=False)

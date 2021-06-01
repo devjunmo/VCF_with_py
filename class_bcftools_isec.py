@@ -9,14 +9,17 @@ import subprocess as sp
 class Mk_vcf_intersection():
 
     def __init__(self, _pair_names_df, _input_dir, \
-                _SNP_path_prefix, _INDEL_path_prefix, \
+                _SNP_path_prefix_T, _SNP_path_prefix_O, \
+                _INDEL_path_prefix_T, _INDEL_path_prefix_O, \
                 _root_output_dir_name_snp, _root_output_dir_name_indel, \
                 _is_only_PASS=True, _filter_comp="PASS"):
 
         self.pair_names_df = _pair_names_df
         self.INPUT_DIR = _input_dir
-        self._SNP_path_prefix = _SNP_path_prefix
-        self._INDEL_path_prefix = _INDEL_path_prefix
+        self._SNP_path_prefix_T = _SNP_path_prefix_T
+        self._SNP_path_prefix_O = _SNP_path_prefix_O
+        self._INDEL_path_prefix_T = _INDEL_path_prefix_T
+        self._INDEL_path_prefix_O = _INDEL_path_prefix_O
         self.root_output_dir_name_snp = _root_output_dir_name_snp
         self.root_output_dir_name_indel = _root_output_dir_name_indel
         self._is_only_PASS = _is_only_PASS
@@ -25,11 +28,11 @@ class Mk_vcf_intersection():
 
     def run_isec(self):
         for rows in self.pair_names_df.itertuples():
-            snp_tumor_data_path = self.INPUT_DIR + self._SNP_path_prefix + rows[1] + '.vcf.gz'
-            snp_origin_data = self.INPUT_DIR + self._SNP_path_prefix + rows[2] + '.vcf.gz'
+            snp_tumor_data_path = self.INPUT_DIR + self._SNP_path_prefix_T + rows[1] + '.vcf.gz'
+            snp_origin_data = self.INPUT_DIR + self._SNP_path_prefix_O + rows[2] + '.vcf.gz'
 
-            indel_teratoma_data_path = self.INPUT_DIR + self._INDEL_path_prefix + rows[1] + '.vcf.gz'
-            indel_origin_data = self.INPUT_DIR + self._INDEL_path_prefix + rows[2] + '.vcf.gz'
+            indel_teratoma_data_path = self.INPUT_DIR + self._INDEL_path_prefix_T + rows[1] + '.vcf.gz'
+            indel_origin_data = self.INPUT_DIR + self._INDEL_path_prefix_O + rows[2] + '.vcf.gz'
 
             output_dir_name = rows[1] + '_' + rows[2]
 
@@ -46,7 +49,7 @@ class Mk_vcf_intersection():
                 os.mkdir(indel_output_dir)
             
 
-            if self.is_only_PASS:
+            if self._is_only_PASS:
                 sp.call(f"bcftools isec -f {self.filter_comp} -p {snp_output_dir}/ {snp_tumor_data_path} {snp_origin_data}", shell=True)
                 sp.call(f"bcftools isec -f {self.filter_comp} -p {indel_output_dir}/ {indel_teratoma_data_path} {indel_origin_data}", shell=True)
             
