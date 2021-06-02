@@ -27,10 +27,11 @@ class TeratomaOrigin(Enum): # csv 파일의 컬럼명 순서로 구성
     Teratoma = 0
     orgin = 1
 
-INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/'
+# INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/'
 # INPUT_DIR = r'/myData/WES/data/vcf/raw/'
 # INPUT_DIR = r'/myData/WES/data/vcf/cnn/WES1_210420/'
 # INPUT_DIR = r'/myData/WES/data/vcf/re_hard/'
+INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Td30_Odx/'
 
 SNP_INPUT_FORMAT = r'hardFiltered_SNP*.vcf.gz'
 INDEL_INPUT_FORMAT = r'hardFiltered_INDEL*.vcf.gz'

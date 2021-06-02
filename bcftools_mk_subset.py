@@ -40,7 +40,7 @@ class TeratomaOrigin(Enum): # csv 파일의 컬럼명 순서로 구성 / specifi
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/incFilter_commons_O/'
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/T_only_data/'
 # INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/both_T_and_I_pos_IPS_view/'
-INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Teratoma_specifics_pass_only/'
+INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Td30_Odx/pass_only_Teratoma_specifics/'
 
 
 # SNP_INPUT_FORMAT = r'hardFiltered_SNP*.vcf.gz'
@@ -66,8 +66,9 @@ PREFIX_SAVE_INDEL = 'subset_INDEL_'
 # PREFIX_SAVE_INDEL = 'raw_subset_INDEL_'
 
 
-SAVE_DIR_NAME = 'subsets_DP30/'
+# SAVE_DIR_NAME = 'subsets_DP30/'
 # SAVE_DIR_NAME = 'raw_subsets/'
+SAVE_DIR_NAME = 'subsets_GT_trim/'
 
 # T-specific일때 IPS파일이 없어서 path list가 모두 삭제되는 현상 발생 해결 목적
 pair_path = r'/myData/WES/src/Origin_Teratoma_pairs.csv'
@@ -179,7 +180,7 @@ elif RUN_MODE == 'specific_only':
 
         for vcf_df in df_lst:
             rm_GT_more_than_one(vcf_df)
-            rm_DP_less_than_30(vcf_df)
+            # rm_DP_less_than_30(vcf_df)
 
         # VCF handling code 삽입 filter_comp 변수 활용!!
 
