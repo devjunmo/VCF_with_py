@@ -24,3 +24,5 @@ extract_T_only.py로 1) Tonly와 2) T-specific이긴 한데 Origin이 탈락한 
 dp30filter.py로 DP 30미만인 포지션에 DP30 찍어줌. 
 
 mk_pass_vcf.py로 pass만 존재하는 vcf파일을 생성할 수 있다. 리눅스 커맨드로 코딩
+
+maf_handling_test.py
