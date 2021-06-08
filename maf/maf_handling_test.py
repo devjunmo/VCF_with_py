@@ -36,6 +36,10 @@ for i in range(len(maf_Tsp_NoDP_input_lst)):
 
     # print(noDP_bed_df['End_Position'].head())
     # print(noDP_maf_df['End_Position'].head())
+    # print(noDP_bed_df['Start_Position'].head())
+    # print(dP_bed_df['Start_Position'].head())
+    print(noDP_maf_df.shape)
+    print(dP_maf_df.shape)
 
 
     no_dp_join_df = pd.merge(noDP_bed_df, noDP_maf_df, how='left', \
@@ -49,12 +53,21 @@ for i in range(len(maf_Tsp_NoDP_input_lst)):
     # print(no_dp_join_df.isnull().values.any()) # True. True = NaN이 섞여있다. 
     #                                            # 여기서 NaN 포함 행은 processed specific이니까 기존 bed에 없던, 즉 bad GT 포지션임.
 
-    nan_df_no_dp = no_dp_join_df[no_dp_join_df['Variant_Classification'].isnull()]
+    # print(type(no_dp_join_df['Variant_Classification'].isnull())) # <class 'pandas.core.series.Series'>
+
+    # nan_df_no_dp = no_dp_join_df[no_dp_join_df['Variant_Classification'].isnull()]
+    processed_maf_df_no_dp = no_dp_join_df[-no_dp_join_df['Variant_Classification'].isnull()] # bed파일에 붙였고, bed에 매치되는게 없는 maf포지션에 대해서는 NaN이 박힘
+    processed_maf_df_apply_dp = dp_join_df[-dp_join_df['Variant_Classification'].isnull()]
     # print(nan_df_no_dp['Variant_Classification'])
-    print(nan_df_no_dp.shape) # 걸러진 GT의 갯수
+    # print(nan_df_no_dp.shape[0]) # 걸러진 GT의 갯수 
+
+    print(f'no dp\n{processed_maf_df_no_dp.shape}')
+    print(f'dp30 pass\n{processed_maf_df_apply_dp.shape}')
+
+
 
 
     
 
 
-    # break
+    break
