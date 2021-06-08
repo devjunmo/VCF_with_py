@@ -1,3 +1,3 @@
 {
-    "python.pythonPath": "/opt/miniconda/envs/gatk/bin/python"
+    "python.pythonPath": "/home/jun/miniconda3/envs/gatk4/bin/python"
 }

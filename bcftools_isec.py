@@ -31,7 +31,8 @@ class TeratomaOrigin(Enum): # csv 파일의 컬럼명 순서로 구성
 # INPUT_DIR = r'/myData/WES/data/vcf/raw/'
 # INPUT_DIR = r'/myData/WES/data/vcf/cnn/WES1_210420/'
 # INPUT_DIR = r'/myData/WES/data/vcf/re_hard/'
-INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Td30_Odx/'
+# INPUT_DIR = r'/myData/WES/data/vcf/hard/WES1_210420/Td30_Odx/'
+INPUT_DIR = r'/data_244/WES/T_DP_O_NDP_samples/'
 
 SNP_INPUT_FORMAT = r'hardFiltered_SNP*.vcf.gz'
 INDEL_INPUT_FORMAT = r'hardFiltered_INDEL*.vcf.gz'
@@ -55,7 +56,7 @@ PREFIX_INDEL_O = r'hardFiltered_INDEL_'
 # PREFIX_INDEL_O = 'hardFiltered_INDEL_'
 
 
-pair_path = r'/myData/WES/src/Origin_Teratoma_pairs.csv'
+pair_path = r'/data_244/WES/Origin_Teratoma_pairs.csv'
 
 enum_data = TeratomaOrigin
 

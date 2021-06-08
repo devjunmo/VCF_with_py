@@ -10,6 +10,8 @@ from class_bcftools_isec import Mk_vcf_intersection
 import matplotlib.pyplot as plt
 
 
+# 이거 안되는 코드 #
+
 
 # extract_T_only.py로 
 # 1) Tonly와 2) T-specific이긴 한데 Origin이 탈락한 부분을 

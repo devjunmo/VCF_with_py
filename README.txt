@@ -1,3 +1,4 @@
+## vcf / bcftools 활용
 
 SNP, INDEL로 나뉜 vcf파일을
 
@@ -18,11 +19,21 @@ vcf파일들을 모아서(0000.vcf같은것) 따로 Teratoma_specifics같은 디
 저장할 수 있다. 인덱싱도 동시진행
 
 
-extract_T_only.py로 1) Tonly와 2) T-specific이긴 한데 Origin이 탈락한 부분을 
-얻고 / 비율구하고 / 걸린 필터 비율 구하기
+extract_T_only.py -> !! 개념이 틀림 !!
 
 dp30filter.py로 DP 30미만인 포지션에 DP30 찍어줌. 
 
 mk_pass_vcf.py로 pass만 존재하는 vcf파일을 생성할 수 있다. 리눅스 커맨드로 코딩
 
-maf_handling_test.py
+csv2bed로 bed파일생성
+
+
+sort_bedfile.py로 chr, start, 기준으로 소팅한다
+
+
+
+## maf 파일 다루기
+
+
+
+## T-only 핸들링
