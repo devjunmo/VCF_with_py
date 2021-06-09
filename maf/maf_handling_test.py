@@ -9,11 +9,11 @@ import subprocess as sp
 # maf파일에 SNP는 Start_Position = End_Position이고,
 # maf's Start_Position = maf's End_Position = bed's End_Position
 
-maf_Tsp_NoDP_inputs = r'/data_244/WES/no_DP_filter_samples/pass_only_Teratoma_specifics/maf/rm_top_hash_maf/rmHd_SNP_*.maf'
-bed_Tsp_NoDP_processed = r'/data_244/WES/no_DP_filter_samples/pass_only_Teratoma_specifics/teratoma_specific_processed_bed_210606/SNP*.bed'
+maf_Tsp_NoDP_inputs = r'/home/jun9485/data/WES/Tsp_annotation_210608/no_DP_filter/maf/rmHd_maf/rmHd_SNP_*.maf'
+bed_Tsp_NoDP_processed = r'/home/jun9485/data/WES/Tsp_annotation_210608/no_DP_filter/teratoma_specific_processed_bed_210609/SNP*.bed'
 
-maf_Tsp_T_DP_inputs = r'/data_244/WES/T_DP_O_NDP_samples/pass_only_Teratoma_specifics/maf/rm_top_hash_maf/rmHd_SNP_*.maf'
-bed_Tsp_T_DP_processed = r'/data_244/WES/T_DP_O_NDP_samples/pass_only_Teratoma_specifics/teratoma_specific_processed_bed_210606/SNP*.bed'
+maf_Tsp_T_DP_inputs = r'/home/jun9485/data/WES/Tsp_annotation_210608/DP_filter_apply/maf/rmHd_maf/rmHd_SNP_*.maf'
+bed_Tsp_T_DP_processed = r'/home/jun9485/data/WES/Tsp_annotation_210608/DP_filter_apply/teratoma_specific_processed_bed_210609/SNP*.bed'
 
 bed_header = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele2']
 key = ['Chromosome', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele2']
@@ -25,7 +25,24 @@ maf_Tsp_T_DP_input_lst = glob(maf_Tsp_T_DP_inputs)
 bed_Tsp_NoDP_input_lst = glob(bed_Tsp_NoDP_processed)
 bed_Tsp_T_DP_input_lst = glob(bed_Tsp_T_DP_processed)
 
+def flip_TF_series(_tmp_lst):
+    for i in range(len(_tmp_lst)):
+        if tmp_lst[i] == True:
+            tmp_lst[i] = False
+        elif tmp_lst[i] == False:
+            tmp_lst[i] = True
+    
+    return_series = pd.Series(_tmp_lst)
+    return return_series
+
+
+
 for i in range(len(maf_Tsp_NoDP_input_lst)):
+    # print(maf_Tsp_NoDP_input_lst[i].split(r'/')[-1].split('.')[0])
+    # print(maf_Tsp_T_DP_input_lst[i].split(r'/')[-1].split('.')[0])
+    # print(bed_Tsp_NoDP_input_lst[i].split(r'/')[-1].split('.')[0])
+    # print(bed_Tsp_T_DP_input_lst[i].split(r'/')[-1].split('.')[0])
+    # break
     print(maf_Tsp_NoDP_input_lst[i].split(r'/')[-1].split('.')[0])
     
     noDP_maf_df = pd.read_csv(maf_Tsp_NoDP_input_lst[i], sep='\t', low_memory=False)
@@ -38,8 +55,10 @@ for i in range(len(maf_Tsp_NoDP_input_lst)):
     # print(noDP_maf_df['End_Position'].head())
     # print(noDP_bed_df['Start_Position'].head())
     # print(dP_bed_df['Start_Position'].head())
-    print(noDP_maf_df.shape)
-    print(dP_maf_df.shape)
+
+    
+
+    # break
 
 
     no_dp_join_df = pd.merge(noDP_bed_df, noDP_maf_df, how='left', \
@@ -61,8 +80,33 @@ for i in range(len(maf_Tsp_NoDP_input_lst)):
     # print(nan_df_no_dp['Variant_Classification'])
     # print(nan_df_no_dp.shape[0]) # 걸러진 GT의 갯수 
 
-    print(f'no dp\n{processed_maf_df_no_dp.shape}')
-    print(f'dp30 pass\n{processed_maf_df_apply_dp.shape}')
+    # print('DP 필터 적용 전, GT 전처리 전:', processed_maf_df_no_dp.shape[0])
+    # print('DP 필터 적용 후, GT 전처리 전:', dP_maf_df.shape[0])
+    # print('DP 필터 적용 후, GT 전처리 후:', processed_maf_df_apply_dp.shape[0])
+    # print('\n')
+
+    joined_maf = pd.merge(processed_maf_df_no_dp, processed_maf_df_apply_dp, how='left', \
+                            on = key)
+    # print(joined_maf['Variant_Classification_y'])
+    # print(joined_maf['Variant_Classification_y'].isnull())
+    tmp_lst = list(joined_maf['Variant_Classification_y'].isnull())
+    srs = flip_TF_series(tmp_lst)
+    # print(srs)
+
+    # print(joined_maf.shape)
+
+    interest_maf = joined_maf[-srs]
+
+    # print(interest_maf.shape)
+
+    # print(interest_maf['Variant_Classification_x'])
+
+    freq = pd.value_counts(interest_maf['Variant_Classification_x'])
+    print(freq)
+
+    
+
+
 
 
 
@@ -70,4 +114,4 @@ for i in range(len(maf_Tsp_NoDP_input_lst)):
     
 
 
-    break
+    # break
