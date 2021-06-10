@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from glob import glob
 import subprocess as sp
+import maf_functions 
 
 # bed파일을 maf에 붙여주는 이유는 GT 처리때문임 
 
@@ -18,6 +19,8 @@ bed_Tsp_T_DP_processed = r'/home/jun9485/data/WES/Tsp_annotation_210608/DP_filte
 bed_header = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele2']
 key = ['Chromosome', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele2']
 
+var_classification_ref = r'/home/jun9485/data/WES/maf_variant_classification.csv'
+
 
 maf_Tsp_NoDP_input_lst = glob(maf_Tsp_NoDP_inputs)
 maf_Tsp_T_DP_input_lst = glob(maf_Tsp_T_DP_inputs)
@@ -25,15 +28,24 @@ maf_Tsp_T_DP_input_lst = glob(maf_Tsp_T_DP_inputs)
 bed_Tsp_NoDP_input_lst = glob(bed_Tsp_NoDP_processed)
 bed_Tsp_T_DP_input_lst = glob(bed_Tsp_T_DP_processed)
 
-def flip_TF_series(_tmp_lst):
-    for i in range(len(_tmp_lst)):
-        if tmp_lst[i] == True:
-            tmp_lst[i] = False
-        elif tmp_lst[i] == False:
-            tmp_lst[i] = True
+var_class_ref_df = pd.read_csv(var_classification_ref, index_col='var_class')
+
+ref_dict = maf_functions.var_ref_df_to_dict(var_class_ref_df, 'var_grp')
+
+print(ref_dict)
+
+print(ref_dict["Silent"])
+exit(0)
+
+# def flip_TF_series(_tmp_lst):
+#     for i in range(len(_tmp_lst)):
+#         if tmp_lst[i] == True:
+#             tmp_lst[i] = False
+#         elif tmp_lst[i] == False:
+#             tmp_lst[i] = True
     
-    return_series = pd.Series(_tmp_lst)
-    return return_series
+#     return_series = pd.Series(_tmp_lst)
+#     return return_series
 
 
 
@@ -87,31 +99,56 @@ for i in range(len(maf_Tsp_NoDP_input_lst)):
 
     joined_maf = pd.merge(processed_maf_df_no_dp, processed_maf_df_apply_dp, how='left', \
                             on = key)
-    # print(joined_maf['Variant_Classification_y'])
-    # print(joined_maf['Variant_Classification_y'].isnull())
-    tmp_lst = list(joined_maf['Variant_Classification_y'].isnull())
-    srs = flip_TF_series(tmp_lst)
-    # print(srs)
 
-    # print(joined_maf.shape)
+    # # print(joined_maf['Variant_Classification_y'])
+    # # print(joined_maf['Variant_Classification_y'].isnull())
+    # tmp_lst = list(joined_maf['Variant_Classification_y'].isnull())
+    # srs = flip_TF_series(tmp_lst) # y부분에 NaN이 아닌부분을 True로 놓아서 마이너스 기호로 빼줄것. 즉, DP적용이 못붙은 포지션만 남기려는 목적. < 생각해보니 굳이..? 그냥 마스크를 []안에 넣으면 될거같은데
 
-    interest_maf = joined_maf[-srs]
+    # # print(srs)
 
-    # print(interest_maf.shape)
+    # # print(joined_maf.shape)
 
-    # print(interest_maf['Variant_Classification_x'])
+    # DP_under_30_maf_df = joined_maf[-srs]
 
-    freq = pd.value_counts(interest_maf['Variant_Classification_x'])
-    print(freq)
+    # # print(interest_maf.shape)
 
-    
+    # # print(interest_maf['Variant_Classification_x'])
+
+    # freq = pd.value_counts(interest_maf['Variant_Classification_x'])
+    # print(freq)
+
+    dp_under_30_mask = joined_maf['Variant_Classification_y'].isnull()
+
+    dp_under_30_maf_df =  joined_maf[dp_under_30_mask]
+
+    dp_under_30_variant_freq = pd.value_counts(dp_under_30_maf_df['Variant_Classification_x'])
+
+    print(dp_under_30_variant_freq)
+
+    print(type(dp_under_30_variant_freq)) # <class 'pandas.core.series.Series'>
+
+    print(dp_under_30_variant_freq['Silent'])
+    print(dp_under_30_variant_freq.index)
+    print(dp_under_30_variant_freq.values)
+    print(type(dp_under_30_variant_freq.index)) # <class 'pandas.core.indexes.base.Index'>
+    print(type(dp_under_30_variant_freq.values)) # <class 'numpy.ndarray'>
+
+    tmp_idx_lst = list(dp_under_30_variant_freq.index)
+    tmp_val_lst = list(dp_under_30_variant_freq.values)
+
+    print(type(tmp_idx_lst)) # list
+    print(type(tmp_val_lst)) # list
+
+    for j in range(len(tmp_idx_lst)):
+        variant_key = tmp_idx_lst[j]
+        variant_grp = tmp_val_lst[j]
+
+        
 
 
 
 
 
 
-    
-
-
-    # break
+    break
