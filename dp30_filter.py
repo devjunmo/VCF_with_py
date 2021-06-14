@@ -4,16 +4,21 @@ from glob import glob
 import subprocess as sp
 
 
-input_dir = r'/myData/WES/data/vcf/hard/WES1_210420/'
-input_format = r'hardFiltered_*_T*.vcf.gz'
+# input_dir = r'/myData/WES/data/vcf/hard/WES1_210420/'
+# input_format = r'hardFiltered_*_T*.vcf.gz'
 
-output_dir = input_dir + r'Td30_Odx/'
+input_dir = r'/data_244/WES/hardfilterd_vcf/'
+# input_format = r'hardFiltered_*_T*.vcf.gz'
+input_format = r'hardFiltered_*_h*.vcf.gz'
+
+
+output_dir = input_dir + r'dp_apply/'
 
 # sample_type = "SNP" # "INDEL"
 
 seq_type = "WES"
 
-interval_path = r'/myData/WES/src/SureSelect_v6_processed.bed'
+interval_path = r'/data_244/refGenome/b37/SureSelect_v6_processed.bed'
 
 ################################################################
 
