@@ -28,7 +28,10 @@ mk_pass_vcf.py로 pass만 존재하는 vcf파일을 생성할 수 있다. 리눅
 csv2bed로 bed파일생성
 
 
-sort_bedfile.py로 chr, start, 기준으로 소팅한다
+sort_bedfile.py로 chr, start, 기준으로 소팅한다.
+
+bcftools_isec_WGS_WES.py  // gather_specific_isec_data_WGS_WES.py 
+WES와 WGS를 비교하는 용도로 작성.
 
 
 

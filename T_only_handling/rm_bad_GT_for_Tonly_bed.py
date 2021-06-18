@@ -24,6 +24,8 @@ t_only_header = ['CHROM', 'START', 'END']
 t_sp_header = ['CHROM', 'START', 'END', 'REF', 'ALT']
 
 
+
+
 for i in range(len(t_sp_bed_lst)):
 
     t_only_bed_df = pd.read_csv(t_only_bed_lst[i], names=t_only_header, sep='\t')
