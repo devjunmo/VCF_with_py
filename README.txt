@@ -37,6 +37,10 @@ WES와 WGS를 비교하는 용도로 작성.
 
 ## maf 파일 다루기
 
+maf_rm_hash.py로 maf파일 해시 떼기
+
+
+
 
 
 ## T-only 핸들링
