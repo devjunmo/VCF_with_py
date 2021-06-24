@@ -5,10 +5,12 @@ import subprocess as sp
 
 # input_dir = r'/data_244/VCF/gatherd_WGS_WES/WES_specific/'
 # input_dir = r'/data_244/VCF/gatherd_WGS_WES/common/'
-input_dir = r'/data_244/VCF/gatherd_WGS_WES/WGS_specific/'
+# input_dir = r'/data_244/VCF/gatherd_WGS_WES/WGS_specific/'
+input_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/'
 
 
-input_format = r'SNP_*.vcf'
+# input_format = r'SNP_*.vcf'
+input_format = r'hardFiltered_SNP_*'
 output_dir_name = r'maf/'
 tmp_dir = input_dir + 'vep_vcf/'
 fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
