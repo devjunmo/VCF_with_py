@@ -16,8 +16,8 @@ import os
 
 # 루프 첫머리에 sample name이 서로 맞는지 확인해주는 과정이 필요함.
 
-maf_WGS_inputs_dir = r'/data_244/VCF/gatherd_noDP_WGS_WES_interval_apply/WGS_specific/maf/rm_hd_maf/'
-maf_WGS_input_format = r'rmHd_SNP_*.maf'
+maf_WGS_inputs_dir = r'/data_244/VCF/1000G_VCF_sample/WGS/maf/rm_hd_maf/'
+maf_WGS_input_format = r'*.maf'
 
 bed_WGS_inputs_dir = r'/data_244/VCF/gatherd_noDP_WGS_WES_interval_apply/WGS_specific/processed_bed/'
 bed_WGS_input_format = r'SNP*.bed'
@@ -268,160 +268,25 @@ for i in range(len(maf_WGS_input_lst)):
 
     # bed data 불러오기
 
-    wgs_bed_df = pd.read_csv(bed_WGS_input_lst[i], sep='\t', names=bed_header, low_memory=False, \
-                dtype={'Chromosome':object, 'Start_Position':object, 'End_Position':object})
+    # wgs_bed_df = pd.read_csv(bed_WGS_input_lst[i], sep='\t', names=bed_header, low_memory=False, \
+    #             dtype={'Chromosome':object, 'Start_Position':object, 'End_Position':object})
     # print(wgs_bed_df)
     # print(wgs_bed_df.dtypes)
     
 
     # GT 제거 전처리
 
-    processed_WGS_maf = gt_processing(wgs_bed_df, wgs_maf_df, key)
+    # processed_WGS_maf = gt_processing(wgs_bed_df, wgs_maf_df, key)
     # print(wgs_bed_df)
     # print(wgs_bed_df.dtypes)
     # print(processed_WGS_maf.loc[:, ["Chromosome", "Start_Position", "End_Position"]])
 
     # variant check
 
-    wgs_variant_freq = pd.value_counts(processed_WGS_maf['Variant_Classification'])
+    wgs_variant_freq = pd.value_counts(wgs_maf_df['Variant_Classification'])
 
     print(wgs_variant_freq)
 
     # wgs_variant_freq.to_csv(freq_out_root_dir + wgs_specific_freq_dir + sample_name + '.csv')
 
     # break
-
-
-
-# for i in range(len(maf_WGS_input_lst)):
-#     sample_type = maf_WGS_input_lst[i].split(r'/')[-1].split('.')[0].split('_')[1]
-#     sample_name = maf_WGS_input_lst[i].split(r'/')[-1].split('.')[0].split('_')[2]
-#     sample_name = sample_type + '_' + sample_name
-
-#     print('[ WGS ]', sample_name)
-
-#     # maf data 불러오기
-    
-#     wgs_maf_df = pd.read_csv(maf_WGS_input_lst[i], sep='\t', low_memory=False)
-#     # print(wgs_maf_df.loc[:, ["Chromosome", "Start_Position", "End_Position", "Variant_Classification"]])
-
-#     # bed data 불러오기
-
-#     wgs_bed_df = pd.read_csv(bed_WGS_input_lst[i], sep='\t', names=bed_header, low_memory=False, \
-#                 dtype={'Chromosome':object, 'Start_Position':object, 'End_Position':object})
-#     # print(wgs_bed_df)
-#     # print(wgs_bed_df.dtypes)
-    
-
-#     # GT 제거 전처리
-
-#     processed_WGS_maf = gt_processing(wgs_bed_df, wgs_maf_df, key)
-#     # print(wgs_bed_df)
-#     # print(wgs_bed_df.dtypes)
-#     # print(processed_WGS_maf.loc[:, ["Chromosome", "Start_Position", "End_Position"]])
-
-#     # variant check
-
-#     wgs_variant_freq = pd.value_counts(processed_WGS_maf['Variant_Classification'])
-
-#     print(wgs_variant_freq)
-
-#     # wgs_variant_freq.to_csv(freq_out_root_dir + wgs_specific_freq_dir + sample_name + '.csv')
-
-#     # break
-
-
-
-
-
-
-
-
-
-
-
-
-    # # (over / under) DP 30 maf file join
-
-    # joined_maf = pd.merge(processed_maf_df_no_dp, processed_maf_df_apply_dp, how='left', \
-    #                         on = key)
-
-
-    # # under 30 변이 테이블 생성
-
-    # dp_under_30_mask = joined_maf['Variant_Classification_y'].isnull()
-    # dp_under_30_maf_df =  joined_maf[dp_under_30_mask]
-    # dp_under_30_variant_freq = pd.value_counts(dp_under_30_maf_df['Variant_Classification_x'])
-    # # print(dp_under_30_variant_freq)
-
-
-
-    # # over 30 변이 테이블 생성
-    # dp_more_30_maf_df = joined_maf[-dp_under_30_mask]
-    # dp_more_30_variant_freq = pd.value_counts(dp_more_30_maf_df['Variant_Classification_x'])
-    # # print(dp_more_30_variant_freq)
-
-    # # exit()
-
-
-
-    # # T-only 변이 테이블 생성 -> silent가 많다
-
-    # # get_processed_t_only_bed(t_only_bed_df, dP_bed_df, t_only_header)
-
-    # joined_maf_t_only = pd.merge(t_only_bed_df_processed, \
-    #                              processed_maf_df_apply_dp, how='left', on = key)
-
-    # # print(joined_maf_t_only)
-
-    # t_only_variant_freq = pd.value_counts(joined_maf_t_only['Variant_Classification'])
-    # # print(t_only_variant_freq)
-
-    # # exit()
-
-
-    # # T-only가 아닌 부분에 대한 변이 테이블 생성
-
-    # # print(processed_maf_df_apply_dp)
-
-    # t_only_bed_df_processed['flag_col'] = 'jun'
-
-
-    # joined_maf_not_t_only = pd.merge(t_only_bed_df_processed, \
-    #                                 processed_maf_df_apply_dp, how='right', on = key)
-
-    # # print(list(joined_maf_not_t_only.columns))
-    # # print(joined_maf_not_t_only['flag_col'])
-    # # print(pd.value_counts(joined_maf_not_t_only['flag_col']))
-
-    # not_tonly_idx = joined_maf_not_t_only['flag_col'].isna()
-    # not_tonly_maf_df = joined_maf_not_t_only[not_tonly_idx]
-    # # print(not_tonly_maf_df.shape)
-    # not_t_only_variant_freq = pd.value_counts(not_tonly_maf_df['Variant_Classification'])
-    # print(not_t_only_variant_freq)
-
-    # # exit()
-
-
-
-    # # # variant를 상위 개념으로 묶기
-    # # mk_grp_freq_table(dp_under_30_variant_freq, ref_grp_dict, dp_under_30_variant_df)
-    # # mk_grp_freq_table(dp_more_30_variant_freq, ref_grp_dict, dp_more_30_variant_df)
-    # # mk_grp_freq_table(t_only_variant_freq, ref_grp_dict, t_only_variant_df)
-    # # mk_grp_freq_table(not_t_only_variant_freq, ref_grp_dict, not_tonly_variant_df)
-
-
-# exit()
-
-
-# freq 저장 
-
-# print(dp_under_30_variant_df)
-# print(dp_under_30_variant_df.shape)
-# dp_under_30_variant_df.to_csv(freq_output_dir + freq_under_30_name)
-# dp_more_30_variant_df.to_csv(freq_output_dir + freq_over_30_name)
-# t_only_variant_df.to_csv(freq_output_dir + freq_tonly_name)
-# not_tonly_variant_df.to_csv(freq_output_dir + freq_not_tonly_name)
-
-    # break
-

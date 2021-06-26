@@ -8,14 +8,16 @@ from class_input_from_csv import MakePairInputList
 from class_bcftools_isec import Mk_vcf_intersection
 
 
-
 # path 딕셔너리 생성 
 # key: hard~snp/indel~T/I   val: [WESpath, WGSpath]
 
+# wgs_vcf_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/'
+# wes_vcf_dir = r'/data_244/WES/hardfilterd_vcf/dp_apply/'
 wgs_vcf_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/'
-wes_vcf_dir = r'/data_244/WES/hardfilterd_vcf/dp_apply/'
+wes_vcf_dir = r'/data_244/WES/no_DP_filter_samples/'
 
-isec_output_dir = r'/data_244/VCF/WGS_WES_isec/'
+# isec_output_dir = r'/data_244/VCF/WGS_WES_isec/'
+isec_output_dir = r'/data_244/VCF/noDP_WGS_WES_isec_interval_apply/'
 
 
 input_format = 'hardFiltered*.vcf.gz'
@@ -28,7 +30,10 @@ root_output_dir_name_indel = r'indel_isec_pass_only/'
 is_PASS_only = True
 filter_comp = 'PASS'
 
-output_root_dir = r''
+interval_path = r'/data_244/refGenome/b37/SureSelect_v6_processed.bed'
+apply_interval = True
+
+# output_root_dir = r''
 
 input_wgs_path_lst = glob(wgs_vcf_dir + input_format)
 # input_wgs_path_lst = [wgs_flag, input_wgs_path_lst]
@@ -38,6 +43,9 @@ input_wes_path_lst = glob(wes_vcf_dir + input_format)
 
 
 # dict val = [wes_path, wgs_path]
+
+if os.path.isdir(isec_output_dir) is False:
+    os.mkdir(isec_output_dir)
 
 for wes_input in input_wes_path_lst:
     key_data = wes_input.split(r'/')[-1].split('.')[0]
@@ -56,6 +64,7 @@ rm_key_lst = []
 for k, v in path_dict.items():
     if len(v) < 2:
         rm_key_lst.append(k)
+
 
 for rm_key in rm_key_lst:
     del path_dict[rm_key]
@@ -80,12 +89,19 @@ for k, v in path_dict.items():
         if os.path.isdir(isec_output_dir + root_output_dir_name_indel) is False:
             os.mkdir(isec_output_dir + root_output_dir_name_indel)
         os.mkdir(indel_output_dir)
-    
+
+
     if is_PASS_only:
-        if var_type == 'SNP':
-            sp.call(f"bcftools isec -f {filter_comp} -p {snp_output_dir}/ {wes_path} {wgs_path}", shell=True)
-        elif var_type == 'INDEL':
-            sp.call(f"bcftools isec -f {filter_comp} -p {indel_output_dir}/ {wes_path} {wgs_path}", shell=True)
+        if apply_interval == True:
+            if var_type == 'SNP':
+                sp.call(f"bcftools isec -R {interval_path} -f {filter_comp} -p {snp_output_dir}/ {wes_path} {wgs_path}", shell=True)
+            elif var_type == 'INDEL':
+                sp.call(f"bcftools isec -R {interval_path} -f {filter_comp} -p {indel_output_dir}/ {wes_path} {wgs_path}", shell=True)
+        else:
+            if var_type == 'SNP':
+                sp.call(f"bcftools isec -f {filter_comp} -p {snp_output_dir}/ {wes_path} {wgs_path}", shell=True)
+            elif var_type == 'INDEL':
+                sp.call(f"bcftools isec -f {filter_comp} -p {indel_output_dir}/ {wes_path} {wgs_path}", shell=True)
 
     # else:
     #     sp.call(f"bcftools isec -p {snp_output_dir}/ {snp_tumor_data_path} {snp_origin_data}", shell=True)

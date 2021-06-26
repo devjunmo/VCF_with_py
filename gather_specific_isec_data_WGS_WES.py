@@ -17,20 +17,25 @@ class TeratomaOrigin(Enum): # 여기서 이거 필요없음. 한큐에 Teratoma,
 RUN_TYPE = 'INDEL'
 
 
-SNP_INPUT_DIR = r'/data_244/VCF/WGS_WES_isec/snp_isec_pass_only/'
-INDEL_INPUT_DIR = r'/data_244/VCF/WGS_WES_isec/indel_isec_pass_only/'
+
+# SNP_INPUT_DIR = r'/data_244/VCF/WGS_WES_isec/snp_isec_pass_only/'
+# INDEL_INPUT_DIR = r'/data_244/VCF/WGS_WES_isec/indel_isec_pass_only/'
+# SNP_INPUT_DIR = r'/data_244/VCF/WGS_WES_isec_interval_apply/snp_isec_pass_only/'
+# INDEL_INPUT_DIR = r'/data_244/VCF/WGS_WES_isec_interval_apply/indel_isec_pass_only/'
+SNP_INPUT_DIR = r'/data_244/VCF/noDP_WGS_WES_isec_interval_apply/snp_isec_pass_only/'
+INDEL_INPUT_DIR = r'/data_244/VCF/noDP_WGS_WES_isec_interval_apply/indel_isec_pass_only/'
 
 # 0000.vcf : WES-spe // 0001.vcf : WGS-spe // 0002.vcf : WES-common // 0003.vcf: WGS-common
 # vcf_name = '0000.vcf' 
-vcf_name = '0001.vcf'
-# vcf_name = '0002.vcf'
+# vcf_name = '0001.vcf'
+vcf_name = '0002.vcf'
 # vcf_name = '0003.vcf'
 
-OUTPUT_ROOT = r'/data_244/VCF/gatherd_WGS_WES/'
+OUTPUT_ROOT = r'/data_244/VCF/gatherd_noDP_WGS_WES_interval_apply/'
 
 # SPECIFIC_DIR = 'WES_specific/'
-SPECIFIC_DIR = 'WGS_specific/'
-# SPECIFIC_DIR = 'common/'
+# SPECIFIC_DIR = 'WGS_specific/'
+SPECIFIC_DIR = 'common/'
 
 OUTPUT_SPECIFIC_DIR = OUTPUT_ROOT + SPECIFIC_DIR
 
@@ -45,6 +50,9 @@ target_sample_name = enum_data.orgin.name
 # 딕셔너리 사용해서 key = name / value = path로 저장하자
 
 path_dict = dict()
+
+if os.path.isdir(OUTPUT_ROOT) is False:
+    os.mkdir(OUTPUT_ROOT)
 
 if os.path.isdir(OUTPUT_SPECIFIC_DIR) is False:
     os.mkdir(OUTPUT_SPECIFIC_DIR)

@@ -30,8 +30,11 @@ csv2bed로 bed파일생성
 
 sort_bedfile.py로 chr, start, 기준으로 소팅한다.
 
-bcftools_isec_WGS_WES.py  // gather_specific_isec_data_WGS_WES.py 
+bcftools_isec_WGS_WES.py / gather_specific_isec_data_WGS_WES.py 
 WES와 WGS를 비교하는 용도로 작성.
+다 하고 R로 GT제거한 bed파일 만들고 온다.
+그러고 압축풀고 어노테이션..
+
 
 
 

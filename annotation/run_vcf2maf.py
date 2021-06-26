@@ -6,11 +6,15 @@ import subprocess as sp
 # input_dir = r'/data_244/VCF/gatherd_WGS_WES/WES_specific/'
 # input_dir = r'/data_244/VCF/gatherd_WGS_WES/common/'
 # input_dir = r'/data_244/VCF/gatherd_WGS_WES/WGS_specific/'
-input_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/'
+# input_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/'
+# input_dir = r'/data_244/VCF/gatherd_WGS_WES_interval_apply/WES_specific/'
+# input_dir = r'/data_244/VCF/gatherd_WGS_WES_interval_apply/WGS_specific/'
+# input_dir = r'/data_244/VCF/gatherd_noDP_WGS_WES_interval_apply/WGS_specific/'
+input_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/interval_apply_vcf/'
 
+input_format = r'*.vcf'
+# input_format = r'hardFiltered_SNP_*'
 
-# input_format = r'SNP_*.vcf'
-input_format = r'hardFiltered_SNP_*'
 output_dir_name = r'maf/'
 tmp_dir = input_dir + 'vep_vcf/'
 fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
@@ -23,7 +27,7 @@ SRC_PATH = SRC_DIR + "vcf2maf.pl"
 pbs_N = "mk_maf.WES"
 pbs_o = input_dir + "qsub_log/"
 pbs_j = "oe"
-pbs_l_core = 3
+pbs_l_core = 4
 
 
 output_dir = input_dir + output_dir_name
