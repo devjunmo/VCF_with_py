@@ -35,11 +35,12 @@ input_lst = glob(input_dir + input_format)
 
 for i in range(len(input_lst)):
 
-    f_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-1] # teratoma-4
-    f_type = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-2] # snp/indel
+    sample_name = input_lst[i].split(r'/')[-1].split(r'.')[0] # 20S-31099-A4-5
+
+    caller_name = input_lst[i].split(r'/')[-1].split(r'.')[1] # mutect1
     
     input_vcf_path = input_lst[i]
-    output_maf_path = output_dir + f_type + '_' + f_name + '.maf' 
+    output_maf_path = output_dir + sample_name + '_' + caller_name + '.maf' 
 
     # sp.call(rf"perl vcf2maf.pl --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir}", shell=True)
 
