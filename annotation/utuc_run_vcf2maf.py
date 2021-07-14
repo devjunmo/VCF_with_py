@@ -8,7 +8,7 @@ input_dir = r'/data_244/utuc/annotation/mutect_data/'
 input_format = r'*.vcf'
 
 output_dir_name = r'maf/'
-tmp_dir = input_dir + 'vep_vcfs/'
+tmp_dir = input_dir + r'vep_vcfs/'
 fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
 
 SRC_DIR = r"/home/pbsuser/mskcc-vcf2maf-754d68a/"
@@ -17,9 +17,9 @@ SRC_PATH = SRC_DIR + "vcf2maf.pl"
 
 ## pbs config
 pbs_N = "utuc_maf.WES"
-pbs_o = input_dir + "qsub_log/"
+pbs_o = input_dir + r"qsub_log/"
 pbs_j = "oe"
-pbs_l_core = 4
+pbs_l_core = 3
 
 
 output_dir = input_dir + output_dir_name
@@ -59,4 +59,4 @@ for i in range(len(input_lst)):
     # sp.call(rf"perl vcf2maf.pl --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir}", shell=True)
 
     sp.call(f'echo "perl {SRC_PATH} --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir}" \
-              | qsub -N {pbs_N} -o {pbs_o} -j {pbs_j} -l select={pbs_l_core} &', shell=True)
+              | qsub -N {pbs_N} -o {pbs_o} -j {pbs_j} -l ncpus={pbs_l_core} &', shell=True)
