@@ -18,6 +18,7 @@ SRC_PATH = SRC_DIR + "vcf2maf.pl"
 
 output_dir = input_dir + output_dir_name
 
+qsub_config = r'/data_240/qsub.5'
 
 if os.path.isdir(output_dir) is False:
     os.mkdir(output_dir)
