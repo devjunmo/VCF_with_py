@@ -35,7 +35,7 @@ ref_dict = maf_functions.var_ref_df_to_dict(var_class_ref_df, 'var_grp')
 print(ref_dict)
 
 print(ref_dict["Silent"])
-exit(0)
+# exit(0)
 
 # def flip_TF_series(_tmp_lst):
 #     for i in range(len(_tmp_lst)):

@@ -4,10 +4,16 @@ from glob import glob
 import matplotlib.pyplot as plt
 import pandas as pd
 import itertools
+import numpy as np
 
 
-input_dir = r'E:/UTUC_data/WES/maf/mutect2/sample2/'
+input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect2/sample2/'
 input_format = r'*.maf'
+
+input_vcf_dir = r'E:/UTUC_data/VCF/rm_hd/mutect2/sample2/'
+input_vcf_format = r'*.vcf'
+
+vcf_header = ['Chromosome', 'Start_Position', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'FORMAT', 'Normal', 'Tumor']
 
 pair_info = r'E:/UTUC_data/utuc_NT_pair.csv'
 
@@ -26,10 +32,43 @@ print(pair_dict)
 
 
 input_lst = glob(input_dir + input_format)
+input_vcf_lst = glob(input_vcf_dir + input_vcf_format)
 
-# print(input_lst)
+print(input_lst)
+# print(input_vcf_lst)
+
+# exit(0)
 
 set_list = []
+
+def get_normal_ac(sample_col):
+    # print(sample_col)
+    ac = int(sample_col.split(':')[1].split(',')[-1])
+    # print(ac)
+    # exit(0)
+    if ac < 2:
+        return_ac = ac
+    else:
+        return_ac = np.nan
+    
+    return return_ac
+
+def get_tumor_ac(sample_col):
+    # print(sample_col)
+    ac = int(sample_col.split(':')[1].split(',')[-1])
+    # print(ac)
+    # exit(0)
+    if ac >= 5:
+        return_ac = ac
+    else:
+        return_ac = np.nan
+    
+    return return_ac
+
+def get_ref_len(sample_col):
+    length = len(sample_col)
+    return length
+
 
 for i in range(len(input_lst)):
     input_maf = input_lst[i]
@@ -41,6 +80,34 @@ for i in range(len(input_lst)):
 
     maf_df = pd.read_csv(input_maf, sep='\t', low_memory=False)
 
+    input_vcf = input_vcf_lst[i]
+
+    vcf_df = pd.read_csv(input_vcf, sep='\t', low_memory=False, names=vcf_header)
+    vcf_df = vcf_df[['Chromosome', 'Start_Position', 'REF', 'ALT', 'Normal', 'Tumor']]
+
+    normal_ac = vcf_df['Normal'].map(get_normal_ac)
+    tumor_ac = vcf_df['Tumor'].map(get_tumor_ac)
+    # ref_len = vcf_df['REF'].map(get_ref_len)
+
+    vcf_df['Normal_ac'] = normal_ac
+    vcf_df['Tumor_ac'] = tumor_ac
+    # vcf_df['ref_len'] = ref_len
+
+    print(vcf_df)
+
+    # vcf_df['Start_Position'] = vcf_df['Start_Position'] + vcf_df['ref_len'] - 1
+    vcf_df = vcf_df.dropna(axis=0)
+
+    print(vcf_df)
+    print(vcf_df.index)
+    filter_idx = list(vcf_df.index)
+    # exit()
+
+    # print(maf_df)
+    # print(len(vcf_df['Start_Position'].unique()))
+
+    
+
     # print(t_name)
     # print(tumor_grade)
 
@@ -50,6 +117,27 @@ for i in range(len(input_lst)):
 
     maf_df = maf_df[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
                      'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2', 'Variant_Classification']]
+
+    print(maf_df)
+    maf_df = maf_df.loc[filter_idx, :]
+
+    # exit()
+
+    # join_key = ['Chromosome', 'Start_Position']
+
+    # joined_df = pd.merge(maf_df, vcf_df, how='left', on = join_key)
+
+    # print(joined_df)
+    
+    # joined_df = joined_df.dropna(axis=0)
+    # print(joined_df)
+
+    # maf_df = joined_df
+
+    maf_df.reset_index(inplace=True, drop=True)
+
+
+    # exit(0)
     
     # coding region이 아닌 부분은 제외
 
@@ -95,13 +183,19 @@ for i in range(len(input_lst)):
 
 
 
+# print([f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', f'{set_list[3][0]}', f'{set_list[4][0]}', f'{set_list[5][0]}'])
+
 # 6개일때
 
 # labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1], set_list[5][1]], \
 #                             fill=['number']) # set으로 받아야함. list안됨
+# # ['20S-14292-A1-7-low', '20S-31099-A4-14-low', '20S-31099-A4-1-high', '20S-31099-A4-2-high', '20S-31099-A4-3-low', '20S-31099-A4-5-intermediate']
 
-# venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
-#                             f'{set_list[3][0]}', f'{set_list[4][0]}', f'{set_list[5][0]}'])
+
+# # venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
+# #                             f'{set_list[3][0]}', f'{set_list[4][0]}', f'{set_list[5][0]}'])
+
+# venn.venn3(labels, names=['UTUC1-bx', 'UTUC1-LG2', 'UTUC1-HG1', 'UTUC1-HG2', 'UTUC1-LG3', 'UTUC1-Intermediate'])
 
 
 # print(type(labels))
@@ -113,12 +207,17 @@ for i in range(len(input_lst)):
 
 # 5개일때
 
+# ['20S-82978-A2-8-high', '20S-82978-A3-10-high', '20S-82978-A3-15-low', '20S-82978-A5-12-low', '20S-82978-A5-13-intermediate']
+
+# print([f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', f'{set_list[3][0]}', f'{set_list[4][0]}'])
 
 labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1]], \
                             fill=['number']) # set으로 받아야함. list안됨
 
-venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
-                            f'{set_list[3][0]}', f'{set_list[4][0]}'])
+# venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
+#                             f'{set_list[3][0]}', f'{set_list[4][0]}'])
+
+venn.venn3(labels, names=['UTUC2-HG1', 'UTUC2-HG2', 'UTUC2-LG2', 'UTUC2-LG1', 'UTUC2-Intermediate'])
 
 
 
