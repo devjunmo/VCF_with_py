@@ -62,7 +62,9 @@ input_lst = glob(input_dir + input_format)
 
 for i in range(len(input_lst)):
 
-    sample_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split['_'][-1] # 20S-31099-A4-5
+    sample_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-1] # 20S-31099-A4-5
+    
+    # break
 
     t_id = sample_name.split('-')[-2] + '-' + sample_name.split('-')[-1] # A4-5
 
