@@ -15,6 +15,8 @@ fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
 SRC_DIR = r"/home/pbsuser/mskcc-vcf2maf-754d68a/"
 SRC_PATH = SRC_DIR + "vcf2maf.pl"
 
+run_type = r'qsub' # qsub, single
+
 
 ## pbs config
 pbs_N = "utuc_maf.WES"
@@ -86,6 +88,10 @@ for i in range(len(input_lst)):
 
     # sp.call(rf"perl vcf2maf.pl --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir}", shell=True)
 
-    sp.call(f'echo "perl {SRC_PATH} --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir} \
-                --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id}" \
-              | qsub -N {pbs_N} -o {pbs_o} -j {pbs_j} -l ncpus={pbs_l_core} &', shell=True)
+    if run_type == 'qsub':
+        sp.call(f'echo "perl {SRC_PATH} --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir} \
+                    --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id}" \
+                | qsub -N {pbs_N} -o {pbs_o} -j {pbs_j} -l ncpus={pbs_l_core} &', shell=True)
+    elif run_type == 'single':
+        sp.call(f'perl {SRC_PATH} --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir} \
+                    --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id}', shell=True)
