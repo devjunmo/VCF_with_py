@@ -6,7 +6,8 @@ import pandas as pd
 import itertools
 
 
-input_dir = r'E:/UTUC_data/WES/maf/mutect2/sample2/'
+# input_dir = r'E:/UTUC_data/WES/maf/mutect2/sample2/'
+input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect/mutect2/filtered_maf/sample2/'
 input_format = r'*.maf'
 
 pair_info = r'E:/UTUC_data/utuc_NT_pair.csv'
@@ -22,7 +23,7 @@ coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del'
                     'Translation_Start_Site', 'Splice_Site']
 
 
-print(pair_dict)
+# print(pair_dict)
 
 
 input_lst = glob(input_dir + input_format)
@@ -34,17 +35,23 @@ set_list = []
 for i in range(len(input_lst)):
     input_maf = input_lst[i]
     # print(input_maf)
-    t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[1] # 20S-14292-A1-7
+    # t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[1] # 20S-14292-A1-7
+    t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[-1] # filtered_mutect2_20S-14292-A1-7 -> 20S-14292-A1-7
     tumor_grade = pair_dict[t_name]['Tumor_Grade'] # low
     
     sample_tag = t_name + '-' + tumor_grade
 
     maf_df = pd.read_csv(input_maf, sep='\t', low_memory=False)
 
+    print(maf_df.shape)
+
+    # exit(0)
+
     # print(t_name)
     # print(tumor_grade)
 
     # print(maf_df.columns)
+    # print(maf_df['Variant_Classification'].unique())
 
     # break
 
@@ -95,7 +102,7 @@ for i in range(len(input_lst)):
 
 
 
-# 6개일때
+# # 6개일때
 
 # labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1], set_list[5][1]], \
 #                             fill=['number']) # set으로 받아야함. list안됨
