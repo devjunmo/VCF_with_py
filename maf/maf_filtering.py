@@ -54,11 +54,13 @@ for i in range(len(input_maf_lst)):
 
     # print(maf_df.columns)
 
-    # print(maf_df['t_depth'])
-    # print(maf_df['t_ref_count'])
-    # print(maf_df['t_alt_count'])
-    # print(maf_df['n_ref_count'])
-    # print(maf_df['n_alt_count']) # 2 미만
+    print(maf_df['t_depth'])
+    print(maf_df['t_ref_count'])
+    print(maf_df['t_alt_count'])
+    print(maf_df['n_ref_count'])
+    print(maf_df['n_alt_count']) # 2 미만
+
+    break
 
     print(sample_name)
 
