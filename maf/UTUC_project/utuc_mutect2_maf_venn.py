@@ -142,6 +142,8 @@ venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[
 
 # exit(0)
 
+############################# 여기서 부터 클래스화 시켜야 함 ################################################
+
 
 from itertools import chain, combinations
  
