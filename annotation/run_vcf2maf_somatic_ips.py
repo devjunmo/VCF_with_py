@@ -11,7 +11,8 @@ import subprocess as sp
 # input_dir = r'/data_244/VCF/gatherd_WGS_WES_interval_apply/WGS_specific/'
 # input_dir = r'/data_244/VCF/gatherd_noDP_WGS_WES_interval_apply/WGS_specific/'
 # input_dir = r'/data_244/WGS/HN00146173/gs/hardfiltered/interval_apply_vcf/'
-input_dir = r'/data_244/stemcell/WES/ips_recal_bam/tumor_only/filtered_vcf/pass_only/'
+# input_dir = r'/data_244/stemcell/WES/ips_recal_bam/tumor_only/filtered_vcf/pass_only/'
+input_dir = r'/data_244/stemcell/WES/ips_recal_bam/tumor_only/filtered_vcf/inc_germ/'
 
 input_format = r'*.vcf'
 # input_format = r'hardFiltered_SNP_*'
@@ -28,7 +29,7 @@ SRC_PATH = SRC_DIR + "vcf2maf.pl"
 pbs_N = "mk_maf.WES"
 pbs_o = input_dir + "qsub_log/"
 pbs_j = "oe"
-pbs_l_core = 4
+pbs_l_core = 3
 
 
 output_dir = input_dir + output_dir_name
@@ -50,11 +51,11 @@ input_lst = glob(input_dir + input_format)
 
 for i in range(len(input_lst)):
 
-    f_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-1] # teratoma-4
-    f_type = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-2] # snp/indel
+    f_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[1] # teratoma-4
+    # f_type = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-2] # snp/indel
     
     input_vcf_path = input_lst[i]
-    output_maf_path = output_dir + f_type + '_' + f_name + '.maf' 
+    output_maf_path = output_dir + f_name + '.maf'
 
     # sp.call(rf"perl vcf2maf.pl --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir}", shell=True)
 
