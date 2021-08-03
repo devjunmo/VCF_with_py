@@ -212,6 +212,12 @@ whole_case_lst = list(sub_lst[-1])
 final_df = pd.DataFrame(columns=['Sample', 'Gene', 'Chr', 'Start', 'End', \
     'Ref', 'Alt1', 'Alt2', 'Type'])
 
+# info_df = pd.DataFrame(columns=['Case', 'Symbol_number'])
+info_df = pd.DataFrame(columns=['Symbol_number', 'Case'])
+
+
+symbol_num = 1
+
 
 for i in range(len(sub_lst)):
 
@@ -239,11 +245,15 @@ for i in range(len(sub_lst)):
     name_lst = []
 
     for n in range(len(sub_lst[i])):
-        print(sub_lst[i][n][0])
+        # print(sub_lst[i][n][0])
         name_lst.append(sub_lst[i][n][0])
 
-    concat_name = '_'.join(name_lst)
-    print(concat_name)
+    concat_name = '___'.join(name_lst)
+    # print(concat_name)
+
+    # info_df = info_df.append(pd.Series([symbol_num, concat_name], index=info_df.columns), ignore_index=True)
+
+    # symbol_num = symbol_num + 1
 
 
 
@@ -266,25 +276,30 @@ for i in range(len(sub_lst)):
     
 
 
-    print(len(specific_gene_set))
-    print(specific_gene_set)
+    # print(len(specific_gene_set))
+    # print(specific_gene_set)
 
-    print(final_df)
+    # print(final_df)
 
     for row in specific_gene_set:
         # print(list(row))
 
         input_row = list(row)
-        print(input_row)
-        input_row.insert(0, concat_name)
-        print(input_row)
-        print(type(input_row))
+        # print(input_row)
+        # input_row.insert(0, concat_name)
+        input_row.insert(0, str(symbol_num))
+        # print(input_row)
+        # print(type(input_row))
         final_df = final_df.append(pd.Series(input_row, index=final_df.columns), ignore_index=True)
+        info_df = info_df.append(pd.Series([symbol_num, concat_name], index=info_df.columns), ignore_index=True)
     
-    if len(specific_gene_set) == 0:
+    if len(specific_gene_set) == 0: # 교집합이 없을때 처리
             input_row = [np.nan]*(len(final_df.columns)-1)
-            input_row.insert(0, concat_name)
+            input_row.insert(0, str(symbol_num))
             final_df = final_df.append(pd.Series(input_row, index=final_df.columns), ignore_index=True)
+    
+
+    symbol_num = symbol_num + 1
 
 
     # concat_tag = eval("_".join([f"sub_lst[{i}][{j}][0]" for j in range(len(sub_lst[i]))]))
@@ -306,6 +321,13 @@ for i in range(len(sub_lst)):
 
 
 print(final_df)
+info_df.drop_duplicates(['Symbol_number', 'Case'], inplace=True)
+
+writer = pd.ExcelWriter(save_gene_df_path, engine='xlsxwriter')
 
 
-final_df.to_excel(save_gene_df_path, index=False)
+final_df.to_excel(writer, sheet_name='Gene data', index=False)
+
+info_df.to_excel(writer, sheet_name='info', index=False)
+
+writer.save()
