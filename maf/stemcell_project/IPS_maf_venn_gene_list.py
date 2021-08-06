@@ -7,19 +7,30 @@ import itertools
 import numpy as np
 
 
+# maf file간 비교 + venn + gene list 정리(엑셀)
 
-input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
+# common / specific --> gene list 부분 의미 있음
+# common --> count부분과 filter부분에서 의미 없음. (첫번째 maf file로만 입력됨)
+
+
+# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/A_p49/'
+input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-1/'
+
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/passage_compare/A/case2/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/clone_compare/p29/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS65/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS66/clone_compare/'
 input_format = r'*.maf'
-save_gene_df_path = input_dir + r'stem_ips_A_p49_tech.xlsx'
+
+# save_gene_df_path = input_dir + r'stem_ips_A_p49_tech.xlsx'
+save_gene_df_path = input_dir + r'stem_ips_VAD-HAP_compare_A_p49_tech1.xlsx'
 
 venn_num = 2
 
-# exclude_filtered_mut = True
-exclude_filtered_mut = False
+exclude_filtered_mut = True
+# exclude_filtered_mut = False
+
+is_showing_venn = True
 
 
 # coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del', \
@@ -27,11 +38,18 @@ exclude_filtered_mut = False
 #                     'Translation_Start_Site', 'Splice_Site']
 
 
+
+
+
 input_lst = glob(input_dir + input_format)
 
 # print(input_lst)
 
 set_list = []
+
+# maf_count_dict = {sample_tag:{(mutid_key_tup):(count_value_tup)}}
+maf_count_dict = dict()
+
 
 for i in range(len(input_lst)):
     input_maf = input_lst[i]
@@ -42,20 +60,30 @@ for i in range(len(input_lst)):
 
     print(sample_tag)
 
-    maf_df = pd.read_csv(input_maf, sep='\t', low_memory=False)
+    maf_df_raw = pd.read_csv(input_maf, sep='\t', low_memory=False)
 
-    print(maf_df.shape)
+    print(maf_df_raw.shape)
 
     # maf_df = maf_df[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
     #                  'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2', 'Variant_Classification']]
 
-    maf_df = maf_df[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
-                     'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification', 'FILTER']]
-    
-    # coding region이 아닌 부분은 제외
+    # maf_df = maf_df[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
+    #                  'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification', 'FILTER']]
 
-    print(maf_df['Variant_Classification'].unique())
-    print(pd.value_counts(maf_df['Variant_Classification']))
+    maf_df = maf_df_raw[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
+                            'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification', \
+                            'FILTER', 't_depth', 't_ref_count', 't_alt_count']]
+    
+    # maf_count_dict[sample_tag] = {}
+    # print(type(maf_df.itertuples(index=False, name=None)))
+
+    
+    ##############################################################
+
+    # print(maf_df['Variant_Classification'].unique())
+    # print(pd.value_counts(maf_df['Variant_Classification']))
+
+    ##############################################################
 
     # coding_idx_lst = []
 
@@ -75,9 +103,36 @@ for i in range(len(input_lst)):
         maf_df = maf_df.drop(non_pass_idx)
         maf_df.reset_index(inplace=True, drop=True)
 
-    print(pd.value_counts(maf_df['Variant_Classification']))
+    # print(pd.value_counts(maf_df['Variant_Classification']))
+
+    maf_df_base = maf_df[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
+                          'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification']]
+
+    maf_df_for_dict = maf_df[['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
+                          'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification', \
+                              'FILTER', 't_depth', 't_ref_count', 't_alt_count']]
 
     # print(maf_df)
+
+
+    maf_count_dict[t_name] = dict()
+
+    for raw_row in  maf_df_for_dict.itertuples(index=False, name=None):
+        
+        # print(raw_row)
+        mut_id = raw_row[:7]
+        count_val = raw_row[-4:]
+
+        # print(mut_id) # ('DDX11L1', '1', 14653, 14653, 'C', 'T', "3'Flank")
+        # print(count_val) # ('PASS', 12, 9, 3)
+        # exit(0)
+
+        maf_count_dict[t_name][mut_id] = count_val
+
+
+    # print(maf_count_dict)
+        
+
 
 
 
@@ -87,7 +142,7 @@ for i in range(len(input_lst)):
 
     sample_point_set = set()
 
-    for row in maf_df.itertuples(index=False, name=None):
+    for row in maf_df_base.itertuples(index=False, name=None):
         # print(row)
         # print(type(row))
         sample_point_set.add(row)
@@ -154,11 +209,11 @@ elif venn_num == 2:
 
 
 
+if is_showing_venn:
+    plt.show()
 
-plt.show()
 
-
-exit(0)
+# exit(0)
 
 ############################# 여기서 부터 클래스화 시켜야 함 ################################################
 
@@ -229,11 +284,11 @@ whole_case_lst = list(sub_lst[-1])
 # print(type(whole_case_lst))
 
 
-final_df = pd.DataFrame(columns=['Sample', 'Gene', 'Chr', 'Start', 'End', \
-    'Ref', 'Alt1', 'Alt2', 'Type'])
+final_df = pd.DataFrame(columns=['Case_number', 'Gene', 'Chr', 'Start', 'End', \
+            'Ref', 'Alt2', 'Type', 'FILTER', 't_depth', 't_ref_count', 't_alt_count'])
 
 # info_df = pd.DataFrame(columns=['Case', 'Symbol_number'])
-info_df = pd.DataFrame(columns=['Symbol_number', 'Case'])
+info_df = pd.DataFrame(columns=['Case_number', 'Case'])
 
 
 symbol_num = 1
@@ -281,7 +336,7 @@ for i in range(len(sub_lst)):
     # print(len(isec_data))
 
     try:
-        etc_isec_data = eval("|".join([f"etc_case[{j}][1]" for j in range(len(etc_case))]))
+        etc_isec_data = eval("|".join([f"etc_case[{j}][1]" for j in range(len(etc_case))])) # etc의 합집합
 
         # print(len(etc_isec_data))
 
@@ -301,15 +356,43 @@ for i in range(len(sub_lst)):
 
     # print(final_df)
 
+    # print(type(specific_gene_set)) # <class 'set'>
+    # print(len(specific_gene_set)) # 길이 변화 x
+    # exit(0)
+
     for row in specific_gene_set:
         # print(list(row))
 
+        # print(row) 
+        # print(type(row)) # tuple
+
+        # dic_key = row[]
+
         input_row = list(row)
         # print(input_row)
+
+        samp_name = concat_name.split('___')[0]
+
+        # print(maf_count_dict[samp_name][mut_id]) # (2,0,2)
+        # print(samp_name)
+
+
+        t_count_val = list(maf_count_dict[samp_name][row])
+
+        # print(t_count_val)
+        # exit(0)
+
+        input_row = input_row + t_count_val
+
+        # print(input_row)
+
+        # exit(0)
+
         # input_row.insert(0, concat_name)
         input_row.insert(0, str(symbol_num))
         # print(input_row)
         # print(type(input_row))
+
         final_df = final_df.append(pd.Series(input_row, index=final_df.columns), ignore_index=True)
         info_df = info_df.append(pd.Series([symbol_num, concat_name], index=info_df.columns), ignore_index=True)
     
@@ -341,7 +424,10 @@ for i in range(len(sub_lst)):
 
 
 print(final_df)
-info_df.drop_duplicates(['Symbol_number', 'Case'], inplace=True)
+
+# exit(0)
+
+info_df.drop_duplicates(['Case_number', 'Case'], inplace=True)
 
 writer = pd.ExcelWriter(save_gene_df_path, engine='xlsxwriter')
 

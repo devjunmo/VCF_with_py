@@ -28,3 +28,6 @@ maf_df.reset_index(inplace=True, drop=True)
 print(maf_df.shape) # (17572, 118)
 
 print(pd.value_counts(maf_df['Variant_Classification']))
+
+
+
