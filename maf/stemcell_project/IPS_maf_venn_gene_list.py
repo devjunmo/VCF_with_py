@@ -13,8 +13,8 @@ import numpy as np
 # common --> count부분과 filter부분에서 의미 없음. (첫번째 maf file로만 입력됨)
 
 
-input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
-# input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-1/'
+# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
+input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-2/'
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/passage_compare/A/case2/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/clone_compare/p29/'
@@ -23,7 +23,7 @@ input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
 input_format = r'*.maf'
 
 # save_gene_df_path = input_dir + r'stem_ips_A_p49_tech.xlsx'
-save_gene_df_path = input_dir + r'stem_ips_VAD-HAP_compare_A_p49_tech1.xlsx'
+save_gene_df_path = input_dir + r'stem_ips_VAD-HAP_compare_A_p49_tech2.xlsx'
 
 venn_num = 2
 
@@ -31,7 +31,7 @@ exclude_filtered_mut = True
 # exclude_filtered_mut = False
 
 is_showing_venn = True
-is_just_showing_venn = True
+is_just_showing_venn = False
 
 
 # coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del', \
