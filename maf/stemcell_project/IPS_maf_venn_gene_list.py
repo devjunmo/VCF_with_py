@@ -13,8 +13,8 @@ import numpy as np
 # common --> count부분과 filter부분에서 의미 없음. (첫번째 maf file로만 입력됨)
 
 
-# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/A_p49/'
-input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-1/'
+input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
+# input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-1/'
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/passage_compare/A/case2/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/clone_compare/p29/'
@@ -31,6 +31,7 @@ exclude_filtered_mut = True
 # exclude_filtered_mut = False
 
 is_showing_venn = True
+is_just_showing_venn = True
 
 
 # coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del', \
@@ -212,8 +213,8 @@ elif venn_num == 2:
 if is_showing_venn:
     plt.show()
 
-
-# exit(0)
+if is_just_showing_venn:
+    exit(0)
 
 ############################# 여기서 부터 클래스화 시켜야 함 ################################################
 
