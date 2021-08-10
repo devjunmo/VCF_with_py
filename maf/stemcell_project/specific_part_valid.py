@@ -10,13 +10,16 @@ import os
 import numpy as np
 
 
-variant_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/stem_ips_B_p49_tech.xlsx'
+# variant_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/stem_ips_B_p49_tech.xlsx'
+variant_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
+
 data_sheet_name = 'Gene data'
 info_sheet_name = 'info'
 
-pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
+# pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
+pair_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/HV_comp_pair_info.csv'
 
-output_path = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/specific_val.xlsx'
+output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
 
 # case_num_name = ['']
 

@@ -14,7 +14,7 @@ import numpy as np
 
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
-input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-2/'
+input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/'
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/passage_compare/A/case2/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/clone_compare/p29/'
@@ -23,7 +23,7 @@ input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/A-2/'
 input_format = r'*.maf'
 
 # save_gene_df_path = input_dir + r'stem_ips_A_p49_tech.xlsx'
-save_gene_df_path = input_dir + r'stem_ips_VAD-HAP_compare_A_p49_tech2.xlsx'
+save_gene_df_path = input_dir + r'stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
 
 venn_num = 2
 
@@ -423,6 +423,8 @@ for i in range(len(sub_lst)):
     # break
 
 
+
+final_df = final_df.sort_values(by=['Case_number', 'Chr', 'Start'])
 
 print(final_df)
 
