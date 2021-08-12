@@ -3,6 +3,9 @@
 
 # input: 생성된 genelist 엑셀파일, case넘버와 매칭되는 maf 경로가 적힌 csv파일(maf가 여러개일때는 ';'로 구분) 
 # maf file 매칭되는게 없을때는 maf 경로자리에 "N" 입력
+# format: {col1: CaseNum, col2: oppMafPath}
+
+
 
 from numpy.core.fromnumeric import shape
 import pandas as pd
@@ -10,16 +13,17 @@ import os
 import numpy as np
 
 
-# variant_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/stem_ips_B_p49_tech.xlsx'
-variant_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
+variant_info = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/A-p49/stem_ips_A_p49_tech.xlsx'
+# variant_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
 
 data_sheet_name = 'Gene data'
 info_sheet_name = 'info'
 
 # pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
-pair_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/HV_comp_pair_info.csv'
+pair_info = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/A-p49/ips29-A-p49_tech_pair-info.csv'
 
-output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
+# output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
+output_path = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/A-p49/hiPS29-A-p49-tech_compare.xlsx'
 
 # case_num_name = ['']
 
@@ -40,7 +44,7 @@ pair_dict = pair_df.to_dict('index')
 
 print(pair_dict)
 
-# print(pair_dict[1]['MafPath']) # 정상
+# print(pair_dict[1]['oppMafPath']) # 정상
 
 
 # pair_dict의 key만 뽑아서, 그 키에 해당하는 var_df의 case num에 대해 df를 추출하고, 이너조인하고, 리스트에 저장 후 마지막에 리스트에 있는거 한번에 concat
@@ -49,13 +53,13 @@ split_df_lst = []
 
 for case_key in pair_dict.keys():
 
-    if pair_dict[case_key]['MafPath'] == 'N':
+    if pair_dict[case_key]['oppMafPath'] == 'N':
         target_var_df = var_df[var_df['Case_number'] == case_key]
         continue
 
     print(case_key)
 
-    opp_maf_paths = pair_dict[case_key]['MafPath']
+    opp_maf_paths = pair_dict[case_key]['oppMafPath']
     print(opp_maf_paths)
     opp_maf_path_lst = opp_maf_paths.split(';')
 

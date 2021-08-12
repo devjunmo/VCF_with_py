@@ -14,16 +14,24 @@ import numpy as np
 
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
-input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/'
+input_dir = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/B-p49/'
+# input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/'
+
+# input_dir = r'E:/UTUC_data/DH_ref/compare/sample2/8/'
+# input_dir = r'E:/UTUC_data/DH_ref/venn/sample2/'
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/passage_compare/A/case2/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/clone_compare/p29/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS65/'
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS66/clone_compare/'
+# input_dir = r'E:/UTUC_data/DH_ref/compare/ac_filtered/sample2/HG2/'
+
 input_format = r'*.maf'
 
-# save_gene_df_path = input_dir + r'stem_ips_A_p49_tech.xlsx'
-save_gene_df_path = input_dir + r'stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
+save_gene_df_path = input_dir + r'stem_ips_B_p49_tech.xlsx'
+
+
+# save_gene_df_path = input_dir + r'DHJM_comp_sam2_HG2.xlsx'
 
 venn_num = 2
 

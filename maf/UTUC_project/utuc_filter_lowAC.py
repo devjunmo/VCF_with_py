@@ -7,7 +7,8 @@ import itertools
 import numpy as np
 
 
-input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect2/sample2/'
+# input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect2/sample2/'
+input_dir = r'E:/UTUC_data/DH_ref/'
 input_format = r'*.maf'
 
 input_vcf_dir = r'E:/UTUC_data/VCF/rm_hd/mutect2/sample2/'

@@ -41,4 +41,4 @@ for sam_id in sample_id_lst:
 
     output_path = os.path.join(root_dir, output_name)
 
-    tmp_maf.to_csv(output_path, sep='\t')
+    tmp_maf.to_csv(output_path, sep='\t', index=False)
