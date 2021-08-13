@@ -13,10 +13,11 @@ from glob import glob
 pd.set_option('display.max_seq_items', None)
 
 
-input_dir = r'E:/UTUC_data/DH_ref/JM'
+input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/hap'
 input_format = r'*.maf'
 
 output_dir_name = r'ac_filtered'
+output_suffix = r'-hap_ac-filtered.maf'
 
 min_total_depth = 30 # 30 이상
 min_tumor_ac = 5 # 5 이상
@@ -32,6 +33,7 @@ if os.path.isdir(output_dir) is False:
 
 input_maf_lst = glob(os.path.join(input_dir, input_format))
 print(input_maf_lst)
+
 
 for input_maf in input_maf_lst:
 
@@ -53,7 +55,7 @@ for input_maf in input_maf_lst:
 
     print(maf_df.shape)
 
-    output_name = sample_name + '_ac-filtered.maf'
+    output_name = sample_name + output_suffix
     output_path = os.path.join(output_dir, output_name)
 
     maf_df.to_csv(output_path, index=False, sep='\t')
