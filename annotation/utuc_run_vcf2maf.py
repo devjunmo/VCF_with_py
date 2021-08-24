@@ -4,7 +4,7 @@ import subprocess as sp
 import pandas as pd
 
 
-input_dir = r'/data_244/utuc/annotation/mutect_data/'
+input_dir = r'/data_244/ej1/'
 
 input_format = r'*.vcf'
 
@@ -22,7 +22,7 @@ run_type = r'qsub' # qsub, single
 pbs_N = "utuc_maf.WES"
 pbs_o = input_dir + r"qsub_log/"
 pbs_j = "oe"
-pbs_l_core = 3
+pbs_l_core = 2
 
 
 output_dir = input_dir + output_dir_name
