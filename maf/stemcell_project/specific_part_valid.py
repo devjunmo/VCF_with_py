@@ -13,17 +13,18 @@ import os
 import numpy as np
 
 
-variant_info = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/A-p49/stem_ips_A_p49_tech.xlsx'
+# variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/final_comp/ips_A_p49_tech_comp.xlsx'
 # variant_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
+variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_justAC_tech_comp.xlsx'
 
 data_sheet_name = 'Gene data'
 info_sheet_name = 'info'
 
 # pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
-pair_info = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/A-p49/ips29-A-p49_tech_pair-info.csv'
+pair_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_tech_comp_pair-info.csv'
 
 # output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
-output_path = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/A-p49/hiPS29-A-p49-tech_compare.xlsx'
+output_path = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_tech_comp_specific.xlsx'
 
 # case_num_name = ['']
 
@@ -69,6 +70,9 @@ for case_key in pair_dict.keys():
     
         opp_maf_df = pd.read_csv(opp_maf_path, sep='\t', low_memory=False)
 
+        # print(opp_maf_df)
+        
+
         opp_maf_df = opp_maf_df[['Chromosome', 'Start_Position', 'End_Position', \
                                 'Reference_Allele', 'Tumor_Seq_Allele2', \
                                 'FILTER', 't_depth', 't_ref_count', 't_alt_count']]
@@ -77,8 +81,11 @@ for case_key in pair_dict.keys():
                             f'opp_{i}_t_depth', f'opp_{i}_t_ref_count', f'opp_{i}_t_alt_count']
 
         # print(opp_maf_df.head())
+        # print(opp_maf_df)
 
         target_var_df = var_df[var_df['Case_number'] == case_key]
+
+        # print(target_var_df)
 
         target_var_df = target_var_df.sort_values(by=['Chr', 'Start'])
         target_var_df.reset_index(inplace=True, drop=True)
@@ -92,6 +99,8 @@ for case_key in pair_dict.keys():
         print(res_df.head())
         print(res_df.tail())
         print(res_df.shape)
+
+        # exit()
 
         # res_df_NAN = res_df[res_df['opp_1_FILTER'].isnull()]
 

@@ -14,8 +14,14 @@ import numpy as np
 
 
 # input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
-input_dir = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/B-p49/'
+# input_dir = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/B-p49/'
 # input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/tech2/nonpass_maf/'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/final_comp_files/t1_t2_comp/'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/final_comp/'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/hips29A-p49-tech2/'
+input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/'
+
 
 # input_dir = r'E:/UTUC_data/DH_ref/compare/sample2/8/'
 # input_dir = r'E:/UTUC_data/DH_ref/venn/sample2/'
@@ -28,15 +34,16 @@ input_dir = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/B-p49/'
 
 input_format = r'*.maf'
 
-save_gene_df_path = input_dir + r'stem_ips_B_p49_tech.xlsx'
+save_gene_df_path = input_dir + r'ips_A_p49_justAC_tech_comp.xlsx'
 
 
 # save_gene_df_path = input_dir + r'DHJM_comp_sam2_HG2.xlsx'
 
 venn_num = 2
 
-exclude_filtered_mut = True
-# exclude_filtered_mut = False
+# exclude_filtered_mut = True
+exclude_filtered_mut = False
+is_inc_germline = True
 
 is_showing_venn = True
 is_just_showing_venn = False
@@ -108,7 +115,11 @@ for i in range(len(input_lst)):
     # maf_df.reset_index(inplace=True, drop=True)
 
     if exclude_filtered_mut:
-        non_pass_idx = maf_df[(maf_df['FILTER'] != 'PASS') & (maf_df['FILTER'] != 'common_variant')].index
+        if is_inc_germline:
+            non_pass_idx = maf_df[(maf_df['FILTER'] != 'PASS') & \
+                (maf_df['FILTER'] != 'common_variant') & (maf_df['FILTER'] != 'germline')].index
+        else:
+            non_pass_idx = maf_df[(maf_df['FILTER'] != 'PASS') & (maf_df['FILTER'] != 'common_variant')].index
         maf_df = maf_df.drop(non_pass_idx)
         maf_df.reset_index(inplace=True, drop=True)
 

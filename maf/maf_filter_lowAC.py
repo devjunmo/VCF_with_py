@@ -13,11 +13,12 @@ from glob import glob
 pd.set_option('display.max_seq_items', None)
 
 
-input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/hap'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/hap'
+input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/mut'
 input_format = r'*.maf'
 
 output_dir_name = r'ac_filtered'
-output_suffix = r'-hap_ac-filtered.maf'
+output_suffix = r'-mut_ac-filtered.maf'
 
 min_total_depth = 30 # 30 이상
 min_tumor_ac = 5 # 5 이상
