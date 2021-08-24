@@ -16,12 +16,12 @@ import subprocess as sp
 # input_dir = r'/data_244/stemcell/WES/ips_recal_bam/vardict_tumor_only/'
 # input_dir = r'/data_244/stemcell/WES/ips_recal_bam/vardict_tumor_only/passonly/'
 # input_dir = r'/data_244/stemcell/WES/hg38_pp/gs/merged/'
-input_dir = r'/data_244/stemcell/WES/hg38_pp/mutect2_tumor_only_PON/'
+input_dir = r'/data_244/stemcell/WES/hg38_pp/gs/merged/'
 
 
-input_format = r'*_filtered.vcf'
+input_format = r'*.vcf'
 # input_format = r'hardFiltered_SNP_*'
-output_suffix = r'_somatic'
+output_suffix = r'_germline'
 
 output_dir_name = r'maf/'
 tmp_dir = input_dir + 'vep_vcf/'
@@ -33,7 +33,7 @@ SRC_PATH = SRC_DIR + "vcf2maf.pl"
 
 
 ## pbs config
-pbs_N = "ips_somatic_anot"
+pbs_N = "ips_ant_germline"
 pbs_o = input_dir + "qsub_log/"
 pbs_j = "oe"
 pbs_l_core = 2
@@ -60,7 +60,7 @@ for i in range(len(input_lst)):
 
     # f_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[1] # teratoma-4
     # f_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[1]
-    f_name = input_lst[i].split(r'/')[-1].split(r'.')[0]
+    f_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[0]
     # f_type = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-2] # snp/indel
     
     input_vcf_path = input_lst[i]
