@@ -14,11 +14,12 @@ pd.set_option('display.max_seq_items', None)
 
 
 # input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/hap'
-input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/mut'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/mut'
+input_dir = r'D:/stemcell/hg38/unfiltered/somatic'
 input_format = r'*.maf'
 
-output_dir_name = r'ac_filtered'
-output_suffix = r'-mut_ac-filtered.maf'
+output_dir_name = r'DP_filtered'
+output_suffix = r'_somatic_DpFiltered.maf'
 
 min_total_depth = 30 # 30 이상
 min_tumor_ac = 5 # 5 이상

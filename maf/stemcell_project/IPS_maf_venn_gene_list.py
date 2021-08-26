@@ -20,7 +20,9 @@ import numpy as np
 # input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/final_comp_files/t1_t2_comp/'
 # input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/final_comp/'
 # input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/hips29A-p49-tech2/'
-input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/'
+# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/'
+# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/'
+input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/for_opponent_maf/tech2/'
 
 
 # input_dir = r'E:/UTUC_data/DH_ref/compare/sample2/8/'
@@ -34,8 +36,9 @@ input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tec
 
 input_format = r'*.maf'
 
-save_gene_df_path = input_dir + r'ips_A_p49_justAC_tech_comp.xlsx'
-
+# save_gene_df_path = input_dir + r'ips_A_p49_justAC_tech_comp.xlsx'
+# save_gene_df_path = input_dir + r'ips_A_p49_tech_comp_filtered.xlsx'
+save_gene_df_path = input_dir + r'ips_A_p49_tech2_comp_unfiltered.xlsx'
 
 # save_gene_df_path = input_dir + r'DHJM_comp_sam2_HG2.xlsx'
 
@@ -70,7 +73,8 @@ maf_count_dict = dict()
 for i in range(len(input_lst)):
     input_maf = input_lst[i]
 
-    t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[0] # hiPS66-C-P10_rmHd.maf -> hiPS66-C-P10
+    # t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[0] # hiPS66-C-P10_rmHd.maf -> hiPS66-C-P10
+    t_name = input_maf.split('\\')[-1].split(r'.')[0]
     
     sample_tag = t_name
 
@@ -178,7 +182,8 @@ for i in range(len(input_lst)):
 # print(set_list[0][1]) # 세트리스트 값
 
 
-
+if set_list[0][0] == set_list[0][1]:
+    print('check your sample name. The name seems same..')
 
 
 if venn_num == 6:

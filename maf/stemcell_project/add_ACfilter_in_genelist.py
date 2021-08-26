@@ -1,12 +1,13 @@
 
 # Filter에 AC관련 필터를 추가해 주는 코드
+# for opponent maf
 
 import pandas as pd 
 import os
 from glob import glob
 
 
-input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/tech1/nonpass_maf'
+input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/for_opponent_maf/tech2'
 input_format = r'*.xlsx'
 
 input_data_lst = glob(os.path.join(input_dir, input_format))
@@ -45,7 +46,7 @@ for input_data in input_data_lst:
 
     print(input_df)
 
-    f_name = os.path.splitext(os.path.basename(input_data))[0] + '_acFilter.xlsx'
+    f_name = os.path.splitext(os.path.basename(input_data))[0] + '_DP-tag.xlsx'
 
     output_path = os.path.join(input_dir, f_name)
 

@@ -6,11 +6,16 @@ import os
 
 
 # root_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/tech2/nonpass_maf'
-root_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/hips29A-p49-tech2'
+# root_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech2/filtered_variant'
+# root_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech2/only_dpfilter_varinat'
+root_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/for_opponent_maf/tech2'
 
-gene_lst_name = r'ips_A_p49_tech2_justAC.xlsx'
 
-output_name = r'ips_A_p49_tech2_justAC.maf'
+gene_lst_name = r'ips_A_p49_tech2_comp_unfiltered_DP-tag.xlsx'
+# gene_lst_name = r'ips_A_p49_tech1_muthap_comp_unfilter.xlsx'
+
+# output_name = r'ips_A_p49_tech2_varinat_filtered.maf'
+output_name = r'ips-A-p49-tech2-varinat-unfiltered-DPTag.maf'
 
 maf_col_name = ['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
                 'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification', \

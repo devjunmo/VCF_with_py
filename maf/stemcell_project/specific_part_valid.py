@@ -15,16 +15,17 @@ import numpy as np
 
 # variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/final_comp/ips_A_p49_tech_comp.xlsx'
 # variant_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
-variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_justAC_tech_comp.xlsx'
+# variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_justAC_tech_comp.xlsx'
+variant_info = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/ips_A_p49_tech_comp_filtered.xlsx'
 
 data_sheet_name = 'Gene data'
 info_sheet_name = 'info'
 
 # pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
-pair_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_tech_comp_pair-info.csv'
+pair_info = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/ips_A_p49_tech_comp_pair-info.csv'
 
 # output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
-output_path = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_tech_comp_specific.xlsx'
+output_path = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/ips_A_p49_tech_comp_specific.xlsx'
 
 # case_num_name = ['']
 
