@@ -13,19 +13,22 @@ import os
 import numpy as np
 
 
-# variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/final_comp/ips_A_p49_tech_comp.xlsx'
-# variant_info = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/stem_ips_VAD-HAP_compare_B_p49_tech2.xlsx'
-# variant_info = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/ips_A_p49_justAC_tech_comp.xlsx'
-variant_info = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/ips_A_p49_tech_comp_filtered.xlsx'
+root_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp/exclude_filterTag_tech_comp'
+
+# variant_info = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/passage_comp/exclude_filterTag_passage_comp/hiPS29-A_genelst_filtered_passageComp.xlsx'
+variant_info = os.path.join(root_dir, 'hiPS29-A-p49_varinat_filtered.xlsx')
 
 data_sheet_name = 'Gene data'
 info_sheet_name = 'info'
 
 # pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
-pair_info = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/ips_A_p49_tech_comp_pair-info.csv'
+# pair_info = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/filtered/final_tech_comp/exclude_filterTag_variant/hiPS29-B-tech_comp_pair_info.csv'
+# pair_info = r'D:/stemcell/hg38/passage_comp/p49-2/filtered/final_tech_comp/exclude_filterTag_variant/hiPS29-2_p49_comp_pair-info.csv'
+pair_info = os.path.join(root_dir, 'hiPS29-A-tech_comp_pair_info.csv')
 
 # output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
-output_path = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/ips_A_p49_tech_comp_specific.xlsx'
+# output_path = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/filtered/final_tech_comp/exclude_filterTag_variant/hiPS29-B-p49_techComp_filterComplete_specific.xlsx'
+output_path = os.path.join(root_dir, 'hiPS29-A-tech_comp_specific.xlsx')
 
 # case_num_name = ['']
 
@@ -59,11 +62,13 @@ for case_key in pair_dict.keys():
         target_var_df = var_df[var_df['Case_number'] == case_key]
         continue
 
-    print(case_key)
+    # print(case_key)
 
     opp_maf_paths = pair_dict[case_key]['oppMafPath']
     print(opp_maf_paths)
     opp_maf_path_lst = opp_maf_paths.split(';')
+
+    res_df = None
 
     for i in range(len(opp_maf_path_lst)):
         
@@ -95,11 +100,18 @@ for case_key in pair_dict.keys():
         print(target_var_df.tail())
         print(target_var_df.shape)
 
-        res_df = pd.merge(target_var_df, opp_maf_df, on=['Chr', 'Start', 'End', 'Ref', 'Alt2'], how='left')
+        if res_df is None:
+            res_df = pd.merge(target_var_df, opp_maf_df, on=['Chr', 'Start', 'End', 'Ref', 'Alt2'], how='left')
+            # print(res_df)
+            # exit(0)
+        else:
+            tmp_df = pd.merge(target_var_df, opp_maf_df, on=['Chr', 'Start', 'End', 'Ref', 'Alt2'], how='left')
+            res_df = pd.merge(res_df, tmp_df, on=['Case_number', 'Gene', 'Chr', 'Start', 'End', 'Ref', 'Alt2', \
+                'Type', 'FILTER', 't_depth', 't_ref_count', 't_alt_count'], how='inner')
 
-        print(res_df.head())
-        print(res_df.tail())
-        print(res_df.shape)
+        # print(res_df.head())
+        # print(res_df.tail())
+        # print(res_df.shape)
 
         # exit()
 
@@ -116,11 +128,15 @@ for case_key in pair_dict.keys():
         # print(res_df_NAN_dp30.tail())
         # print(res_df_NAN_dp30.shape)
 
-        split_df_lst.append(res_df)
+        if i == (len(opp_maf_path_lst) - 1):
+            split_df_lst.append(res_df)
 
 
         # break
 
+# print(split_df_lst[2])
+# print(split_df_lst[3])
+# exit(0)
 
 
 fin_df = pd.concat(split_df_lst)

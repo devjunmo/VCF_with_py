@@ -13,54 +13,67 @@ import numpy as np
 # common --> count부분과 filter부분에서 의미 없음. (첫번째 maf file로만 입력됨)
 
 
-# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/'
-# input_dir = r'E:/stemcell_ips/VAD_newFilter_maf/hiPS29/tech_comp/B-p49/'
-# input_dir = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/'
-# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/tech2/nonpass_maf/'
-# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/final_comp_files/t1_t2_comp/'
-# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/final_comp/'
-# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/hips29A-p49-tech2/'
-# input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/just_ac_apply_comp/tech_comp/'
-# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf/'
-input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/for_opponent_maf/tech2/'
+# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/filtered/p30'
+# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/filtered/passage_comp'
+# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/unfiltered/p30'
+# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29'
+# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS66/C'
+# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/filtered'
+# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29A/unfiltered/tech2'
+input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp'
 
-
-# input_dir = r'E:/UTUC_data/DH_ref/compare/sample2/8/'
-# input_dir = r'E:/UTUC_data/DH_ref/venn/sample2/'
-
-# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/passage_compare/A/case2/'
-# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/clone_compare/p29/'
-# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS65/'
-# input_dir = r'E:/stemcell_ips/somatic_call/vardict/hiPS66/clone_compare/'
-# input_dir = r'E:/UTUC_data/DH_ref/compare/ac_filtered/sample2/HG2/'
 
 input_format = r'*.maf'
 
-# save_gene_df_path = input_dir + r'ips_A_p49_justAC_tech_comp.xlsx'
-# save_gene_df_path = input_dir + r'ips_A_p49_tech_comp_filtered.xlsx'
-save_gene_df_path = input_dir + r'ips_A_p49_tech2_comp_unfiltered.xlsx'
 
-# save_gene_df_path = input_dir + r'DHJM_comp_sam2_HG2.xlsx'
+output_dir_name = r'exclude_filterTag_tech_comp'
+# output_dir_name = r'exclude_filterTag_passage_comp'
+# output_dir_name = r'filter_som_germ_merge'
+# output_dir_name = r'unfilter_som_germ_merge'
+# output_dir_name = r'som_germ_merge'
+# output_dir_name = r'exclude_filterTag_clone_comp'
+
+
+output_dir = os.path.join(input_dir, output_dir_name)
+
+# output_name = r'ips-B-p49-tech1-comp-excludeFilter.xlsx'
+# output_name = r'hiPS29-2_p49_comp_filtered.xlsx'
+# output_name = r'hiPS29-B_genelst_filtered_passageComp.xlsx'
+# output_name = r'hiPS29-B-p30_varinat_filtered.xlsx'
+# output_name = r'hiPS29-E-p30_varinat_filtered.xlsx'
+# output_name = r'hiPS29_varinat_filtered.xlsx'
+# output_name = r'hiPS29-A-p49-2_varinat_unfiltered.xlsx'
+output_name = r'hiPS29-A-p49_varinat_filtered.xlsx'
+
+
+save_gene_df_path = os.path.join(output_dir, output_name)
+
 
 venn_num = 2
 
-# exclude_filtered_mut = True
-exclude_filtered_mut = False
+
+exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
+# exclude_filtered_mut = False
+
+is_just_exonic = True
+# is_just_exonic = False
+
 is_inc_germline = True
 
 is_showing_venn = True
 is_just_showing_venn = False
 
 
-# coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del', \
-#                     'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', \
-#                     'Translation_Start_Site', 'Splice_Site']
+coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Nonstop_Mutation', 'Frame_Shift_Del', \
+                    'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', 'Silent', 'Splice_Site']
 
 
+if os.path.isdir(output_dir) is False:
+    os.mkdir(output_dir)
 
 
-
-input_lst = glob(input_dir + input_format)
+input_lst = glob(os.path.join(input_dir, input_format))
 
 # print(input_lst)
 
@@ -105,18 +118,21 @@ for i in range(len(input_lst)):
 
     ##############################################################
 
-    # coding_idx_lst = []
+    coding_idx_lst = []
 
-    # for cd in coding_region_lst:
-    #     idx = list(maf_df[maf_df['Variant_Classification'] == cd].index)
-    #     coding_idx_lst.append(idx)
+    if is_just_exonic:
+        for cd in coding_region_lst:
+            idx = list(maf_df[maf_df['Variant_Classification'] == cd].index)
+            coding_idx_lst.append(idx)
 
-    # coding_idx_lst = list(itertools.chain(*coding_idx_lst))
-    # coding_idx_lst.sort()
-    # # print(maf_df['Variant_Classification'].unique())
-    
-    # maf_df = maf_df.iloc[coding_idx_lst, ]
-    # maf_df.reset_index(inplace=True, drop=True)
+        coding_idx_lst = list(itertools.chain(*coding_idx_lst))
+        coding_idx_lst.sort()
+        # print(maf_df['Variant_Classification'].unique())
+        
+        maf_df = maf_df.iloc[coding_idx_lst, ]
+        maf_df.reset_index(inplace=True, drop=True)
+
+
 
     if exclude_filtered_mut:
         if is_inc_germline:
@@ -183,7 +199,8 @@ for i in range(len(input_lst)):
 
 
 if set_list[0][0] == set_list[0][1]:
-    print('check your sample name. The name seems same..')
+    print('check your sample name. The name seems to same..')
+    exit(1)
 
 
 if venn_num == 6:

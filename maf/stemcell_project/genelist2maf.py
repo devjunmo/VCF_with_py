@@ -5,17 +5,23 @@ import pandas as pd
 import os
 
 
-# root_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/tech2/nonpass_maf'
-# root_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech2/filtered_variant'
-# root_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech2/only_dpfilter_varinat'
-root_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/for_opponent_maf/tech2'
+
+# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/unfiltered/p29/unfilter_som_germ_merge'
+# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/p29/filter_som_germ_merge'
+# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/filtered/p30/filter_som_germ_merge'
+# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/unfiltered/p30/unfilter_som_germ_merge'
+# root_dir = r'D:/stemcell/hg38/clone_comp/hiPS35/A/som_germ_merge'
+# root_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/som_germ_merge/unfiltered'
+root_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech2/filter_som_germ_merge'
 
 
-gene_lst_name = r'ips_A_p49_tech2_comp_unfiltered_DP-tag.xlsx'
-# gene_lst_name = r'ips_A_p49_tech1_muthap_comp_unfilter.xlsx'
+gene_lst_name = r'hiPS29-A-p49-2_varinat_filtered.xlsx'
+# gene_lst_name = r'hiPS29-E-p30_varinat_unfiltered_DPTag.xlsx'
 
-# output_name = r'ips_A_p49_tech2_varinat_filtered.maf'
-output_name = r'ips-A-p49-tech2-varinat-unfiltered-DPTag.maf'
+
+# output_name = r'hiPS29-E-p30_varinat_filtered.maf'
+output_name = r'hiPS29-A-p49-2_varinat_filtered.maf'
+
 
 maf_col_name = ['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \
                 'Reference_Allele', 'Tumor_Seq_Allele2', 'Variant_Classification', \

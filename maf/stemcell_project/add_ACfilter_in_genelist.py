@@ -7,10 +7,17 @@ import os
 from glob import glob
 
 
-input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/for_opponent_maf/tech2'
+# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/unfiltered/for_opp_maf/tech2/inc_unfilter_for_opp'
+# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/unfiltered/p29/unfilter_som_germ_merge'
+# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/unfiltered/p30/unfilter_som_germ_merge'
+# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/som_germ_merge/unfiltered'
+input_dir = r'E:/stemcell_ips/gdc/tech/29A/unfiltered/tech2/unfilter_som_germ_merge'
+
 input_format = r'*.xlsx'
 
 input_data_lst = glob(os.path.join(input_dir, input_format))
+
+output_suffix = '_DPTag.xlsx'
 
 # filter_lst = ['t_depth', 't_ref_count', 't_alt_count']
 filter_dict = {'t_depth':[30, ';dp30'], 't_alt_count':[5, ';v5']}
@@ -46,7 +53,7 @@ for input_data in input_data_lst:
 
     print(input_df)
 
-    f_name = os.path.splitext(os.path.basename(input_data))[0] + '_DP-tag.xlsx'
+    f_name = os.path.splitext(os.path.basename(input_data))[0] + output_suffix
 
     output_path = os.path.join(input_dir, f_name)
 

@@ -15,11 +15,20 @@ pd.set_option('display.max_seq_items', None)
 
 # input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/hap'
 # input_dir = r'E:/stemcell_ips/HAP_MUT2_compare/unfiltered/mut'
-input_dir = r'D:/stemcell/hg38/unfiltered/somatic'
-input_format = r'*.maf'
+# input_dir = r'D:/stemcell/hg38/unfiltered/somatic'
+# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/filtered/tech1/exclude_filterTag_variant'
+# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/p29/filter_som_germ_merge'
+# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/som_germ_merge'
+input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech2/filter_som_germ_merge'
 
-output_dir_name = r'DP_filtered'
-output_suffix = r'_somatic_DpFiltered.maf'
+
+
+input_format = r'*_filtered.maf'
+
+target_sample_name = r'hiPS29-A-p49-2' # Tumor_Sample_Barcode가 없는 maf파일인 경우
+
+output_dir_name = r'DP_filtered_maf'
+output_suffix = r'_filterComplete.maf'
 
 min_total_depth = 30 # 30 이상
 min_tumor_ac = 5 # 5 이상
@@ -41,15 +50,29 @@ for input_maf in input_maf_lst:
 
     maf_df = pd.read_csv(input_maf, sep='\t', low_memory=False)
 
-    sample_name = maf_df['Tumor_Sample_Barcode'][0]
-    print(sample_name)
+    try:
+        sample_name = maf_df['Tumor_Sample_Barcode'][0]
+        print(sample_name)
+    
+    # Tumor_Sample_Barcode가 없는경우 커버
+    except KeyError:
+        sample_name = target_sample_name
+        print(sample_name)
 
     # print(maf_df.columns)
     print(maf_df.shape)
 
-    filtering_idx = maf_df[(maf_df['t_depth'] < min_total_depth) | \
-        (maf_df['t_alt_count'] < min_tumor_ac) | \
-            (maf_df['n_alt_count'] > max_normal_ac)].index
+    try:
+        filtering_idx = maf_df[(maf_df['t_depth'] < min_total_depth) | \
+            (maf_df['t_alt_count'] < min_tumor_ac) | \
+                (maf_df['n_alt_count'] > max_normal_ac)].index
+    
+    # (tumor only sample일때) normal 정보가 없는경우임
+    except KeyError:
+        filtering_idx = maf_df[(maf_df['t_depth'] < min_total_depth) | \
+        (maf_df['t_alt_count'] < min_tumor_ac)].index
+
+            
     # print(filtering_idx)
 
     maf_df = maf_df.drop(filtering_idx)
