@@ -8,13 +8,14 @@ import numpy as np
 
 
 # input_dir = r'E:/UTUC_data/WES/maf/mutect2/sample2/'
-input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect/mutect2/filtered_maf/sample1/'
+# input_dir = r'E:/UTUC_data/gdc_hg38/maf/1st_lynch/DP_filtered_maf/'
+input_dir = r'E:/UTUC_data/gatk_hg38/DH_ref/JM/ac_filtered/sample2/'
 # input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect/mutect2/filtered_maf/sample2/'
 input_format = r'*.maf'
-save_gene_df_path = input_dir + r'utuc_sample1.xlsx'
+save_gene_df_path = input_dir + r'utuc_2nd_gatk38.xlsx'
 # save_gene_df_path = input_dir + r'utuc_sample2.xlsx'
 
-pair_info = r'E:/UTUC_data/utuc_NT_pair.csv'
+pair_info = r'E:/UTUC_data/utuc_NT_pair_ver_210910.csv'
 
 
 pair_df = pd.read_csv(pair_info)
@@ -24,9 +25,12 @@ pair_dict = pair_df.to_dict('index')
 
 
 
-coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del', \
-                'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', \
-                    'Translation_Start_Site', 'Splice_Site']
+# coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del', \
+#                 'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', \
+#                     'Translation_Start_Site', 'Splice_Site']
+
+coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Nonstop_Mutation', 'Frame_Shift_Del', \
+                    'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', 'Silent', 'Splice_Site']
 
 
 # print(pair_dict)
@@ -34,7 +38,7 @@ coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Frame_Shift_Del'
 
 input_lst = glob(input_dir + input_format)
 
-# print(input_lst)
+print(input_lst)
 
 set_list = []
 
@@ -42,7 +46,7 @@ for i in range(len(input_lst)):
     input_maf = input_lst[i]
     # print(input_maf)
     # t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[1] # 20S-14292-A1-7
-    t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[-1] # filtered_mutect2_20S-14292-A1-7 -> 20S-14292-A1-7
+    t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[0] # filtered_mutect2_20S-14292-A1-7 -> 20S-14292-A1-7
     tumor_grade = pair_dict[t_name]['Tumor_Grade'] # low
     
     sample_tag = t_name + '-' + tumor_grade
@@ -108,14 +112,21 @@ for i in range(len(input_lst)):
 # print(set_list[0][1]) # 세트리스트 값
 
 
+# # 7개 일 때 -> X
+
+# labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1], set_list[5][1], set_list[6][1]], \
+#                             fill=['number']) # set으로 받아야함. list안됨
+
+# venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
+#                             f'{set_list[3][0]}', f'{set_list[4][0]}', f'{set_list[5][0]}', f'{set_list[6][0]}'])
 
 # # 6개일때
 
-labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1], set_list[5][1]], \
-                            fill=['number']) # set으로 받아야함. list안됨
+# labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1], set_list[5][1]], \
+#                             fill=['number']) # set으로 받아야함. list안됨
 
-venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
-                            f'{set_list[3][0]}', f'{set_list[4][0]}', f'{set_list[5][0]}'])
+# venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
+#                             f'{set_list[3][0]}', f'{set_list[4][0]}', f'{set_list[5][0]}'])
 
 
 # print(type(labels))
@@ -128,16 +139,16 @@ venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[
 # 5개일때
 
 
-# labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1]], \
-#                             fill=['number']) # set으로 받아야함. list안됨
+labels = venn.get_labels([set_list[0][1], set_list[1][1], set_list[2][1], set_list[3][1], set_list[4][1]], \
+                            fill=['number']) # set으로 받아야함. list안됨
 
-# venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
-#                             f'{set_list[3][0]}', f'{set_list[4][0]}'])
-
-
+venn.venn3(labels, names=[f'{set_list[0][0]}', f'{set_list[1][0]}', f'{set_list[2][0]}', \
+                            f'{set_list[3][0]}', f'{set_list[4][0]}'])
 
 
-# plt.show()
+
+
+plt.show()
 
 
 # exit(0)
@@ -211,11 +222,11 @@ whole_case_lst = list(sub_lst[-1])
 # print(type(whole_case_lst))
 
 
-final_df = pd.DataFrame(columns=['Sample', 'Gene', 'Chr', 'Start', 'End', \
+final_df = pd.DataFrame(columns=['CaseNumber', 'Gene', 'Chr', 'Start', 'End', \
     'Ref', 'Alt1', 'Alt2', 'Type'])
 
 # info_df = pd.DataFrame(columns=['Case', 'Symbol_number'])
-info_df = pd.DataFrame(columns=['Symbol_number', 'Case'])
+info_df = pd.DataFrame(columns=['Case_number', 'Case'])
 
 
 symbol_num = 1
@@ -323,7 +334,7 @@ for i in range(len(sub_lst)):
 
 
 print(final_df)
-info_df.drop_duplicates(['Symbol_number', 'Case'], inplace=True)
+info_df.drop_duplicates(['Case_number', 'Case'], inplace=True)
 
 writer = pd.ExcelWriter(save_gene_df_path, engine='xlsxwriter')
 

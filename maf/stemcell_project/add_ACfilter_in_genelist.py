@@ -1,5 +1,5 @@
 
-# Filter에 AC관련 필터를 추가해 주는 코드
+# Filter에 AC관련 필터 tag를 추가해 주는 코드
 # for opponent maf
 
 import pandas as pd 
@@ -7,11 +7,14 @@ import os
 from glob import glob
 
 
-# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/unfiltered/for_opp_maf/tech2/inc_unfilter_for_opp'
-# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/unfiltered/p29/unfilter_som_germ_merge'
-# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/unfiltered/p30/unfilter_som_germ_merge'
 # input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/som_germ_merge/unfiltered'
-input_dir = r'E:/stemcell_ips/gdc/tech/29A/unfiltered/tech2/unfilter_som_germ_merge'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29A/unfiltered/tech2/unfilter_som_germ_merge'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech2_muthap/unfilter_mut_hap_merge'
+# input_dir = r'E:/stemcell_ips/gdc/passage/29A/29A_p29_muthap/unfilter_mut_hap_merge'
+# input_dir = r'E:/stemcell_ips/gdc/passage/29B/29B_p30_muthap/unfilter_mut_hap_merge'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech2_muthap/unfilter_mut_hap_merge'
+input_dir = r'E:/stemcell_ips/gdc/clone'
+
 
 input_format = r'*.xlsx'
 

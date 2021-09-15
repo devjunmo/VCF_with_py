@@ -6,21 +6,21 @@ import os
 
 
 
-# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/unfiltered/p29/unfilter_som_germ_merge'
-# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/p29/filter_som_germ_merge'
-# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/filtered/p30/filter_som_germ_merge'
-# root_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/unfiltered/p30/unfilter_som_germ_merge'
 # root_dir = r'D:/stemcell/hg38/clone_comp/hiPS35/A/som_germ_merge'
 # root_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/som_germ_merge/unfiltered'
-root_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech2/filter_som_germ_merge'
+# root_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech2/filter_som_germ_merge'
+# root_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech1_muthap/filter_mut_hap_merge'
+# root_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech2_muthap/filter_mut_hap_merge'
+# root_dir = r'E:/stemcell_ips/gdc/clone/hips29/29E_muthap/filter_mut_hap_merge'
+root_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap/filter_mut_hap_merge'
 
 
-gene_lst_name = r'hiPS29-A-p49-2_varinat_filtered.xlsx'
-# gene_lst_name = r'hiPS29-E-p30_varinat_unfiltered_DPTag.xlsx'
+gene_lst_name = r'hiPS66-C_varinat_filtered.xlsx'
+# gene_lst_name = r'hiPS29-E_varinat_unfiltered_DPTag.xlsx'
 
 
-# output_name = r'hiPS29-E-p30_varinat_filtered.maf'
-output_name = r'hiPS29-A-p49-2_varinat_filtered.maf'
+output_name = r'hiPS66-C_varinat_filtered.maf'
+# output_name = r'hiPS29-E_varinat_unfiltered_DPTag.maf'
 
 
 maf_col_name = ['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', \

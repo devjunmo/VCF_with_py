@@ -13,39 +13,37 @@ import numpy as np
 # common --> count부분과 filter부분에서 의미 없음. (첫번째 maf file로만 입력됨)
 
 
-# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/filtered/p30'
-# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/filtered/passage_comp'
-# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-B/unfiltered/p30'
-# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29'
-# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS66/C'
-# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/filtered'
-# input_dir = r'D:/stemcell/hg38/tech_comp/ips29-A-p49/unfiltered/DP_filtered/tech_comp/filtered_maf'
-# input_dir = r'E:/stemcell_ips/gdc/tech/29A/unfiltered/tech2'
-input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech2_muthap'
+# input_dir = r'E:/stemcell_ips/gdc/passage/29B/29B_p30_muthap'
+input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29B/tech_comp'
+# input_dir = r'E:/stemcell_ips/gdc/passage/29B/passage_comp'
+# input_dir = r'E:/stemcell_ips/gdc/clone/hips29/clone_comp'
+
 
 
 input_format = r'*.maf'
 
 
-output_dir_name = r'exclude_filterTag_tech_comp'
+
+# output_dir_name = r'filter_mut_hap_merge'
+output_dir_name = r'unfilter_mut_hap_merge'
+# output_dir_name = r'exclude_filterTag_tech_comp'
 # output_dir_name = r'exclude_filterTag_passage_comp'
-# output_dir_name = r'filter_som_germ_merge'
-# output_dir_name = r'unfilter_som_germ_merge'
-# output_dir_name = r'som_germ_merge'
 # output_dir_name = r'exclude_filterTag_clone_comp'
 
 
+# output_name = r'hiPS66-C_varinat_filtered.xlsx'
+output_name = r'hiPS66-C_varinat_unfiltered.xlsx'
+# output_name = r'hiPS29-B-p49-2_varinat_unfiltered.xlsx'
+# output_name = r'hiPS29-E_varinat_filtered.xlsx'
+# output_name = r'hiPS29-B-p49_tech_varinat_filtered.xlsx'
+# output_name = r'hiPS29-B_passage_varinat_filtered.xlsx'
+# output_name = r'hiPS35_clone_varinat_filtered.xlsx'
+
+
+
 output_dir = os.path.join(input_dir, output_dir_name)
-
-# output_name = r'ips-B-p49-tech1-comp-excludeFilter.xlsx'
-# output_name = r'hiPS29-2_p49_comp_filtered.xlsx'
-# output_name = r'hiPS29-B_genelst_filtered_passageComp.xlsx'
-# output_name = r'hiPS29-B-p30_varinat_filtered.xlsx'
-# output_name = r'hiPS29-E-p30_varinat_filtered.xlsx'
-# output_name = r'hiPS29_varinat_filtered.xlsx'
-# output_name = r'hiPS29-A-p49-2_varinat_unfiltered.xlsx'
-output_name = r'hiPS29-A-p49_varinat_filtered.xlsx'
-
 
 save_gene_df_path = os.path.join(output_dir, output_name)
 
@@ -53,15 +51,17 @@ save_gene_df_path = os.path.join(output_dir, output_name)
 venn_num = 2
 
 
-exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
-# exclude_filtered_mut = False
-
-is_just_exonic = True
-# is_just_exonic = False
+# exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
+exclude_filtered_mut = False
 
 is_inc_germline = True
 
 is_showing_venn = True
+
+# is_just_exonic = True
+is_just_exonic = False
+
+# is_just_showing_venn = True
 is_just_showing_venn = False
 
 
@@ -75,7 +75,7 @@ if os.path.isdir(output_dir) is False:
 
 input_lst = glob(os.path.join(input_dir, input_format))
 
-# print(input_lst)
+# print(input_lst) ##################################
 
 set_list = []
 
@@ -157,7 +157,7 @@ for i in range(len(input_lst)):
 
     maf_count_dict[t_name] = dict()
 
-    for raw_row in  maf_df_for_dict.itertuples(index=False, name=None):
+    for raw_row in maf_df_for_dict.itertuples(index=False, name=None):
         
         # print(raw_row)
         mut_id = raw_row[:7]

@@ -13,10 +13,15 @@ import os
 import numpy as np
 
 
-root_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp/exclude_filterTag_tech_comp'
+root_dir = r'E:/stemcell_ips/gdc/clone/hips29/clone_comp/exclude_filterTag_tech_comp'
+
+variant_info_name = 'hiPS29_clone_varinat_filtered.xlsx'
+pair_info_name = 'hiPS29_clone_comp_pair-info.csv'
+
+output_name = 'hiPS29_clone_comp_specific.xlsx'
 
 # variant_info = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/passage_comp/exclude_filterTag_passage_comp/hiPS29-A_genelst_filtered_passageComp.xlsx'
-variant_info = os.path.join(root_dir, 'hiPS29-A-p49_varinat_filtered.xlsx')
+variant_info = os.path.join(root_dir, variant_info_name)
 
 data_sheet_name = 'Gene data'
 info_sheet_name = 'info'
@@ -24,11 +29,11 @@ info_sheet_name = 'info'
 # pair_info = r'E:/stemcell_ips/somatic_call/vardict/hiPS29/tech_compare/B_p49/tech_comp_pair_info.csv'
 # pair_info = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/filtered/final_tech_comp/exclude_filterTag_variant/hiPS29-B-tech_comp_pair_info.csv'
 # pair_info = r'D:/stemcell/hg38/passage_comp/p49-2/filtered/final_tech_comp/exclude_filterTag_variant/hiPS29-2_p49_comp_pair-info.csv'
-pair_info = os.path.join(root_dir, 'hiPS29-A-tech_comp_pair_info.csv')
+pair_info = os.path.join(root_dir, pair_info_name)
 
 # output_path = r'E:/stemcell_ips/HAP_VAD_compare/hIPS29/technical/B-2/hIPS29-B-2-specific_caller_compare.xlsx'
 # output_path = r'D:/stemcell/hg38/tech_comp/ips29-B-p49/filtered/final_tech_comp/exclude_filterTag_variant/hiPS29-B-p49_techComp_filterComplete_specific.xlsx'
-output_path = os.path.join(root_dir, 'hiPS29-A-tech_comp_specific.xlsx')
+output_path = os.path.join(root_dir, output_name)
 
 # case_num_name = ['']
 
