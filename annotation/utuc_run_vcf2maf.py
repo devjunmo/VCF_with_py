@@ -4,30 +4,33 @@ import subprocess as sp
 import pandas as pd
 
 
-input_dir = r'/data_244/ej1/'
+input_dir = r'/data_244/utuc/utuc_gdc/mutect2/tmp/'
 
-input_format = r'*.vcf'
+input_format = r'*_pass.vcf'
 
 output_dir_name = r'maf/'
 tmp_dir = input_dir + r'vep_vcfs/'
-fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
+# fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
+fasta_path = r'/data_244/refGenome/hg38/v0/gdc/GRCh38.d1.vd1.fa'
 
 SRC_DIR = r"/home/pbsuser/mskcc-vcf2maf-754d68a/"
 SRC_PATH = SRC_DIR + "vcf2maf.pl"
 
 run_type = r'qsub' # qsub, single
 
+ref_ver = 'GRCh38' # GRCh37 
+
 
 ## pbs config
-pbs_N = "utuc_maf.WES"
+pbs_N = "utuc.gdc.3rd2.annot"
 pbs_o = input_dir + r"qsub_log/"
 pbs_j = "oe"
-pbs_l_core = 2
+pbs_l_core = 4
 
 
 output_dir = input_dir + output_dir_name
 
-tumor_normal_id_info = r'/data_244/utuc/utuc_NT_pair.csv'
+tumor_normal_id_info = r'/data_244/utuc/utuc_NT_pair_ver_210910.csv'
 
 
 pair_df = pd.read_csv(tumor_normal_id_info)
@@ -64,11 +67,12 @@ input_lst = glob(input_dir + input_format)
 
 for i in range(len(input_lst)):
 
-    sample_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[-1] # 20S-31099-A4-5
+    sample_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[0] # 20S-31099-A4-5
     
     # break
 
-    t_id = sample_name.split('-')[-2] + '-' + sample_name.split('-')[-1] # A4-5
+    # t_id = sample_name.split('-')[-2] + '-' + sample_name.split('-')[-1] # A4-5
+    t_id = sample_name
 
     try:
         n_id = pair_dict[sample_name]['Normal']
@@ -77,21 +81,24 @@ for i in range(len(input_lst)):
         print(f'{sample_name} does not have target normal sample')
         continue
 
-    caller_name = input_lst[i].split(r'/')[-1].split(r'.')[1] # mutect1
+    caller_name = input_lst[i].split(r'/')[-1].split(r'.')[0].split(r'_')[1] # mutect2
     
     input_vcf_path = input_lst[i]
     output_maf_path = output_dir + sample_name + '_' + caller_name + '.maf' 
 
-    print(input_vcf_path)
-    print(output_maf_path)
+    # print(input_vcf_path)
+    # print(output_maf_path)
     # break
 
     # sp.call(rf"perl vcf2maf.pl --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir}", shell=True)
 
     if run_type == 'qsub':
         sp.call(f'echo "perl {SRC_PATH} --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir} \
-                    --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id}" \
+                    --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id} --ncbi-build {ref_ver}" \
                 | qsub -N {pbs_N} -o {pbs_o} -j {pbs_j} -l ncpus={pbs_l_core} &', shell=True)
     elif run_type == 'single':
         sp.call(f'perl {SRC_PATH} --input-vcf {input_vcf_path} --output-maf {output_maf_path} --ref-fasta {fasta_path} --tmp-dir {tmp_dir} \
-                    --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id}', shell=True)
+                    --tumor-id {sample_name} --normal-id {n_id} --vcf-tumor-id {t_id} --vcf-normal-id {n_id} --ncbi-build {ref_ver}', shell=True)
+
+
+
