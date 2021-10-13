@@ -15,10 +15,11 @@ import numpy as np
 
 # input_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech2_muthap'
 # input_dir = r'E:/stemcell_ips/gdc/passage/29B/29B_p30_muthap'
-input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap'
+# input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66A_muthap'
+# input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/tech/29B/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/passage/29B/passage_comp'
-# input_dir = r'E:/stemcell_ips/gdc/clone/hips29/clone_comp'
+input_dir = r'E:/stemcell_ips/gdc/clone/hips35/clone_comp'
 
 
 
@@ -27,19 +28,19 @@ input_format = r'*.maf'
 
 
 # output_dir_name = r'filter_mut_hap_merge'
-output_dir_name = r'unfilter_mut_hap_merge'
+# output_dir_name = r'unfilter_mut_hap_merge'
 # output_dir_name = r'exclude_filterTag_tech_comp'
 # output_dir_name = r'exclude_filterTag_passage_comp'
-# output_dir_name = r'exclude_filterTag_clone_comp'
+output_dir_name = r'exclude_filterTag_clone_comp'
 
 
-# output_name = r'hiPS66-C_varinat_filtered.xlsx'
-output_name = r'hiPS66-C_varinat_unfiltered.xlsx'
+# output_name = r'hiPS66-A_varinat_filtered.xlsx'
+# output_name = r'hiPS66-A_varinat_unfiltered.xlsx'
 # output_name = r'hiPS29-B-p49-2_varinat_unfiltered.xlsx'
 # output_name = r'hiPS29-E_varinat_filtered.xlsx'
-# output_name = r'hiPS29-B-p49_tech_varinat_filtered.xlsx'
+# output_name = r'hiPS29-A-p49_tech_varinat_filtered.xlsx'
 # output_name = r'hiPS29-B_passage_varinat_filtered.xlsx'
-# output_name = r'hiPS35_clone_varinat_filtered.xlsx'
+output_name = r'hiPS65_clone_varinat_filtered.xlsx'
 
 
 
@@ -48,21 +49,21 @@ output_dir = os.path.join(input_dir, output_dir_name)
 save_gene_df_path = os.path.join(output_dir, output_name)
 
 
-venn_num = 2
+venn_num = 3
 
 
-# exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
-exclude_filtered_mut = False
+exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
+# exclude_filtered_mut = False
 
 is_inc_germline = True
 
 is_showing_venn = True
 
-# is_just_exonic = True
-is_just_exonic = False
+is_just_exonic = True
+# is_just_exonic = False
 
-# is_just_showing_venn = True
-is_just_showing_venn = False
+is_just_showing_venn = True
+# is_just_showing_venn = False
 
 
 coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Nonstop_Mutation', 'Frame_Shift_Del', \

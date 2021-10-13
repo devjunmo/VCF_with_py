@@ -9,10 +9,13 @@ import numpy as np
 
 # input_dir = r'E:/UTUC_data/WES/maf/mutect2/sample2/'
 # input_dir = r'E:/UTUC_data/gdc_hg38/maf/1st_lynch/DP_filtered_maf/'
-input_dir = r'E:/UTUC_data/gatk_hg38/DH_ref/JM/ac_filtered/sample2/'
+# input_dir = r'E:/UTUC_data/gatk_hg38/DH_ref/JM/ac_filtered/sample2/'
+# input_dir = r'E:/UTUC_data/gdc_hg38/maf/2nd/DP_AF_filtered_maf/'
+input_dir = r'D:/junmo/wd/utuc/maf/rmhd_maf/mutect2/sample2/'
 # input_dir = r'E:/UTUC_data/WES/rmhd_maf/mutect/mutect2/filtered_maf/sample2/'
 input_format = r'*.maf'
-save_gene_df_path = input_dir + r'utuc_2nd_gatk38.xlsx'
+save_gene_df_path = input_dir + r'utuc_2nd_gdc_acfilter.xlsx'
+# save_gene_df_path = input_dir + r'utuc_3rd_gdc_AF_filter_apply.xlsx'
 # save_gene_df_path = input_dir + r'utuc_sample2.xlsx'
 
 pair_info = r'E:/UTUC_data/utuc_NT_pair_ver_210910.csv'
@@ -339,7 +342,7 @@ info_df.drop_duplicates(['Case_number', 'Case'], inplace=True)
 writer = pd.ExcelWriter(save_gene_df_path, engine='xlsxwriter')
 
 
-final_df.to_excel(writer, sheet_name='Gene data', index=False)
+final_df.to_excel(writer, sheet_name='Gene data', index=False, na_rep='NaN')
 
 info_df.to_excel(writer, sheet_name='info', index=False)
 
