@@ -19,7 +19,8 @@ import numpy as np
 # input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/tech/29B/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/passage/29B/passage_comp'
-input_dir = r'E:/stemcell_ips/gdc/clone/hips35/clone_comp'
+# input_dir = r'E:/stemcell_ips/gdc/clone/hips35/clone_comp'
+input_dir = r'E:/UTUC_data/gdc_hg38/maf/4th/DP_AF_filtered_maf'
 
 
 
@@ -31,7 +32,8 @@ input_format = r'*.maf'
 # output_dir_name = r'unfilter_mut_hap_merge'
 # output_dir_name = r'exclude_filterTag_tech_comp'
 # output_dir_name = r'exclude_filterTag_passage_comp'
-output_dir_name = r'exclude_filterTag_clone_comp'
+# output_dir_name = r'exclude_filterTag_clone_comp'
+output_dir_name = r'exclude_filterTag_utuc'
 
 
 # output_name = r'hiPS66-A_varinat_filtered.xlsx'
@@ -40,7 +42,8 @@ output_dir_name = r'exclude_filterTag_clone_comp'
 # output_name = r'hiPS29-E_varinat_filtered.xlsx'
 # output_name = r'hiPS29-A-p49_tech_varinat_filtered.xlsx'
 # output_name = r'hiPS29-B_passage_varinat_filtered.xlsx'
-output_name = r'hiPS65_clone_varinat_filtered.xlsx'
+# output_name = r'hiPS65_clone_varinat_filtered.xlsx'
+output_name = r'utuc_4th_compare.xlsx'
 
 
 
@@ -49,25 +52,26 @@ output_dir = os.path.join(input_dir, output_dir_name)
 save_gene_df_path = os.path.join(output_dir, output_name)
 
 
-venn_num = 3
+venn_num = 2
 
 
 exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
 # exclude_filtered_mut = False
 
-is_inc_germline = True
+# is_inc_germline = True
+is_inc_germline = False
 
 is_showing_venn = True
 
 is_just_exonic = True
 # is_just_exonic = False
 
-is_just_showing_venn = True
-# is_just_showing_venn = False
+# is_just_showing_venn = True
+is_just_showing_venn = False
 
 
 coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Nonstop_Mutation', 'Frame_Shift_Del', \
-                    'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', 'Silent', 'Splice_Site']
+                    'Frame_Shift_Ins', 'In_Frame_Del', 'In_Frame_Ins', 'Silent', 'Splice_Site', 'Translation_Start_Site']
 
 
 if os.path.isdir(output_dir) is False:
@@ -88,7 +92,8 @@ for i in range(len(input_lst)):
     input_maf = input_lst[i]
 
     # t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[0] # hiPS66-C-P10_rmHd.maf -> hiPS66-C-P10
-    t_name = input_maf.split('\\')[-1].split(r'.')[0]
+    # t_name = input_maf.split('\\')[-1].split(r'.')[0]
+    t_name = input_maf.split('\\')[-1].split(r'.')[0].split(r'_')[0]
     
     sample_tag = t_name
 

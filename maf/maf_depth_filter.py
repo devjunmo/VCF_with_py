@@ -12,16 +12,12 @@ from glob import glob
 
 pd.set_option('display.max_seq_items', None)
 
-
-# input_dir = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/p29/filter_som_germ_merge'
-# input_dir = r'D:/stemcell/hg38/clone_comp/hiPS29/som_germ_merge'
-# input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech2/filter_som_germ_merge'
-# input_dir = r'E:/stemcell_ips/gdc/passage/29A/29A_p29_muthap/filter_mut_hap_merge'
 # input_dir = r'E:/stemcell_ips/gdc/clone/hips29/29E_muthap/filter_mut_hap_merge'
 # input_dir = r'E:/UTUC_data/gdc_hg38/maf/3rd'
 # input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech1/filter_som_germ_merge/DP_filtered_maf'
-input_dir = r'D:/junmo/wd/utuc/maf/rmhd_maf/mutect2/sample2/'
+# input_dir = r'D:/junmo/wd/utuc/maf/rmhd_maf/mutect2/sample2/'
 # input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap/filter_mut_hap_merge'
+input_dir = r'E:/UTUC_data/gdc_hg38/maf/5th'
 
 
 

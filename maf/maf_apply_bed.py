@@ -22,16 +22,21 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-INPUT_DIR = r'E:/UTUC_data/gdc_hg38/maf/2nd/DP_AF_filtered_maf/true_maf'
+# INPUT_DIR = r'E:/UTUC_data/gdc_hg38/maf/2nd/DP_AF_filtered_maf/true_maf'
+INPUT_DIR = r'E:/UTUC_data/gdc_hg38/maf/3rd/DP_AF_filtered_maf/True_maf'
 OUTPUT_DIR_NAME = r'True_positive_maf'
-
-OUTPUT_DIR = os.path.join(INPUT_DIR, OUTPUT_DIR_NAME)
 
 maf_format = '*.maf'
 bed_format = '*.txt'
 
 maf_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2']
 bed_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2']
+
+
+OUTPUT_DIR = os.path.join(INPUT_DIR, OUTPUT_DIR_NAME)
+
+if os.path.isdir(OUTPUT_DIR) is False:
+    os.mkdir(OUTPUT_DIR)
 
 maf_path_lst = natsort.natsorted(glob(os.path.join(INPUT_DIR, maf_format)))
 bed_path_lst = natsort.natsorted(glob(os.path.join(INPUT_DIR, bed_format)))
@@ -52,11 +57,15 @@ def inner_join_maf_bed(_maf_path, _bed_path):
 
 for i in range(len(maf_path_lst)):
     
-    # true_maf = inner_join_maf_bed(maf_path_lst[i], bed_path_lst[i])
+    true_maf = inner_join_maf_bed(maf_path_lst[i], bed_path_lst[i])
 
-    f_name = os.path.splitext(os.path.basename(maf_path_lst[i]))
-    print(f_name)
+    f_name = os.path.splitext(os.path.basename(maf_path_lst[i]))[0]
+    f_name = f_name + '_truePositive.maf'
 
-    break
-    # true_maf.to_csv(output_path, index=False, sep='\t')
+    output_path = os.path.join(OUTPUT_DIR, f_name)
+    
+    true_maf.to_csv(output_path, index=False, sep='\t')
+
+    # break
+    
 
