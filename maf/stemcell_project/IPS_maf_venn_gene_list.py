@@ -19,14 +19,13 @@ import numpy as np
 # input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/tech/29B/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/passage/29B/passage_comp'
-# input_dir = r'E:/stemcell_ips/gdc/clone/hips35/clone_comp'
-input_dir = r'E:/UTUC_data/gdc_hg38/maf/4th/DP_AF_filtered_maf'
-
+input_dir = r'E:/stemcell_ips/gdc/clone/hips29/clone_comp/AB_compare_P49/filtered'
+# input_dir = r'E:/UTUC_data/gdc_hg38/maf/2nd_re/DP_AF_filtered_maf'
 
 
 input_format = r'*.maf'
 
-
+venn_num = 2
 
 # output_dir_name = r'filter_mut_hap_merge'
 # output_dir_name = r'unfilter_mut_hap_merge'
@@ -35,7 +34,6 @@ input_format = r'*.maf'
 # output_dir_name = r'exclude_filterTag_clone_comp'
 output_dir_name = r'exclude_filterTag_utuc'
 
-
 # output_name = r'hiPS66-A_varinat_filtered.xlsx'
 # output_name = r'hiPS66-A_varinat_unfiltered.xlsx'
 # output_name = r'hiPS29-B-p49-2_varinat_unfiltered.xlsx'
@@ -43,7 +41,8 @@ output_dir_name = r'exclude_filterTag_utuc'
 # output_name = r'hiPS29-A-p49_tech_varinat_filtered.xlsx'
 # output_name = r'hiPS29-B_passage_varinat_filtered.xlsx'
 # output_name = r'hiPS65_clone_varinat_filtered.xlsx'
-output_name = r'utuc_4th_compare.xlsx'
+# output_name = r'utuc_2nd_compare.xlsx'
+output_name = r'hiPS29_AB_comp.xlsx'
 
 
 
@@ -52,14 +51,16 @@ output_dir = os.path.join(input_dir, output_dir_name)
 save_gene_df_path = os.path.join(output_dir, output_name)
 
 
-venn_num = 2
 
 
-exclude_filtered_mut = True # pass, common, germline만 쓰겠다는 플래그
+# apply_pass_only = True # pass만 쓰겠다는 플래그 (최우선 적용)
+apply_pass_only = False
+
+exclude_filtered_mut = True # pass, common만 쓰겠다는 플래그
 # exclude_filtered_mut = False
 
-# is_inc_germline = True
-is_inc_germline = False
+is_inc_germline = True # pass, common에 germline tag를 추가로 쓰겠다는 플래그
+# is_inc_germline = False
 
 is_showing_venn = True
 
@@ -139,8 +140,12 @@ for i in range(len(input_lst)):
         maf_df.reset_index(inplace=True, drop=True)
 
 
+    if apply_pass_only:
+        non_passonly_idx = maf_df[(maf_df['FILTER'] != 'PASS')].index
+        maf_df = maf_df.drop(non_passonly_idx)
+        maf_df.reset_index(inplace=True, drop=True)
 
-    if exclude_filtered_mut:
+    elif exclude_filtered_mut:
         if is_inc_germline:
             non_pass_idx = maf_df[(maf_df['FILTER'] != 'PASS') & \
                 (maf_df['FILTER'] != 'common_variant') & (maf_df['FILTER'] != 'germline')].index
@@ -470,6 +475,9 @@ for i in range(len(sub_lst)):
     # break
 
 
+final_df['Case_number'] = pd.to_numeric(final_df['Case_number'])
+
+print(final_df.dtypes)
 
 final_df = final_df.sort_values(by=['Case_number', 'Chr', 'Start'])
 
@@ -482,7 +490,7 @@ info_df.drop_duplicates(['Case_number', 'Case'], inplace=True)
 writer = pd.ExcelWriter(save_gene_df_path, engine='xlsxwriter')
 
 
-final_df.to_excel(writer, sheet_name='Gene data', index=False)
+final_df.to_excel(writer, sheet_name='Gene data', index=False, na_rep='NaN')
 
 info_df.to_excel(writer, sheet_name='info', index=False)
 

@@ -337,6 +337,7 @@ for i in range(len(sub_lst)):
 
 
 print(final_df)
+
 info_df.drop_duplicates(['Case_number', 'Case'], inplace=True)
 
 writer = pd.ExcelWriter(save_gene_df_path, engine='xlsxwriter')

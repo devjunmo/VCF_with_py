@@ -1,6 +1,6 @@
 
 """
-maf file에 bed file을 inner join
+maf file에 대응하는 bed file을 inner join
 bed file의 컬럼명은 대응하는 maf 파일의 컬럼명과 동일하게 설정
 """
 
@@ -23,14 +23,16 @@ class bcolors:
 
 
 # INPUT_DIR = r'E:/UTUC_data/gdc_hg38/maf/2nd/DP_AF_filtered_maf/true_maf'
-INPUT_DIR = r'E:/UTUC_data/gdc_hg38/maf/3rd/DP_AF_filtered_maf/True_maf'
+INPUT_DIR = r'E:/UTUC_data/gdc_hg38/maf/5th/DP_AF_filtered_maf/exclude_filterTag_utuc'
 OUTPUT_DIR_NAME = r'True_positive_maf'
 
 maf_format = '*.maf'
 bed_format = '*.txt'
 
-maf_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2']
-bed_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2']
+# maf_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2']
+# bed_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2']
+maf_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele2']
+bed_join_col = ['Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele2']
 
 
 OUTPUT_DIR = os.path.join(INPUT_DIR, OUTPUT_DIR_NAME)
@@ -41,6 +43,10 @@ if os.path.isdir(OUTPUT_DIR) is False:
 maf_path_lst = natsort.natsorted(glob(os.path.join(INPUT_DIR, maf_format)))
 bed_path_lst = natsort.natsorted(glob(os.path.join(INPUT_DIR, bed_format)))
 
+print(maf_path_lst)
+print(bed_path_lst)
+
+# exit(0)
 
 if len(maf_path_lst) != len(bed_path_lst):
     print(f'{bcolors.FAIL}len(maf_path_lst) != len(bed_path_lst){bcolors.ENDC}')

@@ -17,7 +17,7 @@ pd.set_option('display.max_seq_items', None)
 # input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech1/filter_som_germ_merge/DP_filtered_maf'
 # input_dir = r'D:/junmo/wd/utuc/maf/rmhd_maf/mutect2/sample2/'
 # input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap/filter_mut_hap_merge'
-input_dir = r'E:/UTUC_data/gdc_hg38/maf/5th'
+input_dir = r'E:/UTUC_data/gdc_hg38/maf/2nd_re'
 
 
 
