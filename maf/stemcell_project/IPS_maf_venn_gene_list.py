@@ -19,13 +19,14 @@ import numpy as np
 # input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/tech/29B/tech_comp'
 # input_dir = r'E:/stemcell_ips/gdc/passage/29B/passage_comp'
-input_dir = r'E:/stemcell_ips/gdc/clone/hips29/clone_comp/AB_compare_P49/filtered'
+# input_dir = r'E:/stemcell_ips/gdc/clone/hips29/clone_comp/AB_compare_P49/filtered'
 # input_dir = r'E:/UTUC_data/gdc_hg38/maf/2nd_re/DP_AF_filtered_maf'
+input_dir = r'E:/UTUC_data/gdc_hg38/maf/1st_lynch/DP_AF_filtered_maf'
 
 
 input_format = r'*.maf'
 
-venn_num = 2
+venn_num = 6
 
 # output_dir_name = r'filter_mut_hap_merge'
 # output_dir_name = r'unfilter_mut_hap_merge'
@@ -41,8 +42,8 @@ output_dir_name = r'exclude_filterTag_utuc'
 # output_name = r'hiPS29-A-p49_tech_varinat_filtered.xlsx'
 # output_name = r'hiPS29-B_passage_varinat_filtered.xlsx'
 # output_name = r'hiPS65_clone_varinat_filtered.xlsx'
-# output_name = r'utuc_2nd_compare.xlsx'
-output_name = r'hiPS29_AB_comp.xlsx'
+output_name = r'utuc_1st_compare.xlsx'
+# output_name = r'hiPS29_AB_comp.xlsx'
 
 
 
@@ -53,14 +54,14 @@ save_gene_df_path = os.path.join(output_dir, output_name)
 
 
 
-# apply_pass_only = True # pass만 쓰겠다는 플래그 (최우선 적용)
-apply_pass_only = False
+apply_pass_only = True # pass만 쓰겠다는 플래그 (최우선 적용)
+# apply_pass_only = False
 
-exclude_filtered_mut = True # pass, common만 쓰겠다는 플래그
-# exclude_filtered_mut = False
+# exclude_filtered_mut = True # pass, common만 쓰겠다는 플래그
+exclude_filtered_mut = False
 
-is_inc_germline = True # pass, common에 germline tag를 추가로 쓰겠다는 플래그
-# is_inc_germline = False
+# is_inc_germline = True # pass, common에 germline tag를 추가로 쓰겠다는 플래그
+is_inc_germline = False
 
 is_showing_venn = True
 
