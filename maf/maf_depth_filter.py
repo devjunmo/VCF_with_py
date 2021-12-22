@@ -17,19 +17,20 @@ pd.set_option('display.max_seq_items', None)
 # input_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech1/filter_som_germ_merge/DP_filtered_maf'
 # input_dir = r'D:/junmo/wd/utuc/maf/rmhd_maf/mutect2/sample2/'
 # input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap/filter_mut_hap_merge'
-input_dir = r'E:/UTUC_data/gdc_hg38/maf/1st_lynch'
+# input_dir = r'E:/UTUC_data/gdc_hg38/germline/maf/LG_N'
+input_dir = r'E:/stemcell/maf/hg38_gdc/whole_samples'
 
 
 
 # input_format = r'*_filtered.maf'
 input_format = r'*.maf'
 
-target_sample_name = r'hiPS29-A-p49-1' # Tumor_Sample_Barcode가 없는 maf파일인 경우
+target_sample_name = r'hiPS36-C' # Tumor_Sample_Barcode가 없는 maf파일인 경우
 
 # output_dir_name = r'DP_filtered_maf'
 output_dir_name = r'DP_AF_filtered_maf'
 
-output_suffix = r'_filterComplete.maf'
+output_suffix = r'_DP_filtered.maf'
 
 min_total_depth = 30 # 30 이상
 min_tumor_ac = 5 # 5 이상
