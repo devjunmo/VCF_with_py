@@ -10,21 +10,21 @@ import subprocess as sp
 # input_dir = r'/data_244/stemcell/WES/hg38_pp/gs/merged/'
 # input_dir = r'/data_244/stemcell/WES/hg38_gdc_ips_tech/mutect2_tumor_only/'
 # input_dir = r'/data_244/stemcell/WES/hg38_gdc_ips_etc/gs/merged_VCF/'
-input_dir = r'/data_244/stemcell/WES/hg38_gdc_ips_etc/mutect2_tumor_only/'
+input_dir = r'/data_244/stemcell/WES/hg38_gatk/teratoma/gs/merged_VCF/'
 
 
-input_format = r'*_filtered.vcf'
+# input_format = r'*_filtered.vcf'
 # input_format = r'hardFiltered_SNP_*'
-# input_format = r'*.vcf'
+input_format = r'*.vcf'
 
-# output_suffix = r'_HAP'
-output_suffix = r'_MUT2'
+output_suffix = r'_HAP'
+# output_suffix = r'_MUT2'
 
 output_dir_name = r'maf/'
 tmp_dir = input_dir + 'vep_vcf/'
-# fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta'
-# fasta_path = r'/data_244/refGenome/hg38/v0/Homo_sapiens_assembly38.fasta'
-fasta_path = r'/data_244/refGenome/hg38/v0/gdc/GRCh38.d1.vd1.fa'
+# fasta_path = r'/data_244/refGenome/b37/human_g1k_v37.fasta' # b37
+fasta_path = r'/data_244/refGenome/hg38/v0/Homo_sapiens_assembly38.fasta' # gatk
+# fasta_path = r'/data_244/refGenome/hg38/v0/gdc/GRCh38.d1.vd1.fa' # gdc
 
 # vep_data = r'/data_244/vep_data/homo_sapiens/102_GRCh38'
 ref_ver = 'GRCh38' # GRCh37 
@@ -34,7 +34,7 @@ SRC_PATH = SRC_DIR + "vcf2maf.pl"
 
 
 ## pbs config
-pbs_N = "ips.mut.gdc.hg38"
+pbs_N = "gatk.tera19"
 pbs_o = input_dir + "qsub_log_maf/"
 pbs_j = "oe"
 pbs_l_core = 4

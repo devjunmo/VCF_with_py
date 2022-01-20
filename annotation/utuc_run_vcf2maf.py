@@ -4,7 +4,7 @@ import subprocess as sp
 import pandas as pd
 
 
-input_dir = r'/data_244/utuc/utuc_gdc/mutect2/tmp/'
+input_dir = r'/data_244/utuc/utuc_gdc_2nd_LG2_re/mutect2_utuc/maf/'
 
 input_format = r'*_pass.vcf'
 
@@ -22,7 +22,7 @@ ref_ver = 'GRCh38' # GRCh37
 
 
 ## pbs config
-pbs_N = "utuc.gdc.3rd2.annot"
+pbs_N = "utuc.gdc.2rd2.annot"
 pbs_o = input_dir + r"qsub_log/"
 pbs_j = "oe"
 pbs_l_core = 4
@@ -30,7 +30,7 @@ pbs_l_core = 4
 
 output_dir = input_dir + output_dir_name
 
-tumor_normal_id_info = r'/data_244/utuc/utuc_NT_pair_ver_210910.csv'
+tumor_normal_id_info = r'/data_244/utuc/utuc_NT_pair_ver_211029_utuc4_1.csv'
 
 
 pair_df = pd.read_csv(tumor_normal_id_info)
