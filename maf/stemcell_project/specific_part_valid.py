@@ -13,13 +13,13 @@ import os
 import numpy as np
 
 
-root_dir = r'E:/stemcell_ips/gdc/clone/hips66/clone_comp/exclude_filterTag_clone_comp'
+root_dir = r'E:/stemcell/stemcell_ips/b37/somatic_call/mutect2/pass_only/maf/hiPS29/rmHd/A_tech1/DP_AF_filtered_maf/exclude_filterTag_stem'
 # root_dir = r'E:/stemcell_ips/gdc/tech/29A/filtered/tech_comp/exclude_filterTag_tech_comp'
 
-variant_info_name = 'hiPS66_clone_variant_filtered.xlsx'
-pair_info_name = 'hiPS66_clone_comp_pair-info.csv'
+variant_info_name = '29A_tehc1_comp.xlsx'
+pair_info_name = 'tech_comp_pair_info.csv'
 
-output_name = 'hiPS66_clone_comp_specific.xlsx'
+output_name = '29A_mutect2_tech1_comp_specific.xlsx'
 
 # variant_info = r'D:/stemcell/hg38/passage_comp/hiPS29-A/filtered/passage_comp/exclude_filterTag_passage_comp/hiPS29-A_genelst_filtered_passageComp.xlsx'
 variant_info = os.path.join(root_dir, variant_info_name)
