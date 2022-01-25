@@ -2,6 +2,7 @@
 # Filter에 AC관련 필터 tag를 추가해 주는 코드
 # for opponent maf
 
+from cv2 import detail_SeamFinder
 import pandas as pd 
 import os
 from glob import glob
@@ -14,7 +15,6 @@ from glob import glob
 # input_dir = r'E:/stemcell_ips/gdc/passage/29B/29B_p30_muthap/unfilter_mut_hap_merge'
 # input_dir = r'E:/stemcell_ips/gdc/tech/29B/29B_tech2_muthap/unfilter_mut_hap_merge'
 input_dir = r'E:/stemcell_ips/gdc/clone'
-
 
 input_format = r'*.xlsx'
 

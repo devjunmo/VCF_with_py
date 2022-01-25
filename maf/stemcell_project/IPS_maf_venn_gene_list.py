@@ -1,3 +1,4 @@
+from cv2 import detail_SeamFinder
 import venn
 import os
 from glob import glob
@@ -23,7 +24,8 @@ import numpy as np
 # input_dir = r'E:/UTUC_data/gdc_hg38/maf/2nd_re/DP_AF_filtered_maf'
 # input_dir = r'E:/UTUC_data/gdc_hg38/germline/maf/LG_N'
 # input_dir = r'E:/stemcell/maf/hg38_gdc/mt_sample/29A/Tera/DP_AF_filtered_maf'
-input_dir = r'E:/stemcell/maf/hg38_gdc/whole_samples/DP_AF_filtered_maf/I45D_T6'
+# input_dir = r'E:/stemcell/maf/hg38_gdc/whole_samples/DP_AF_filtered_maf/I45D_T6'
+input_dir = r'E:/stemcell/maf/hg38_gdc/mt_sample/Tera'
 
 
 input_format = r'*.maf'
@@ -50,8 +52,7 @@ output_dir_name = r'exclude_filterTag_stem'
 # output_name = r'hiPS29_AB_comp.xlsx'
 # output_name = r'29B_Tera_comp.xlsx'
 # output_name = r'29_clone_comp.xlsx'
-output_name = r'I45D_T6_comp.xlsx'
-
+output_name = r'T19I36C_comp.xlsx'
 
 
 output_dir = os.path.join(input_dir, output_dir_name)
@@ -61,22 +62,22 @@ save_gene_df_path = os.path.join(output_dir, output_name)
 
 
 
-# apply_pass_only = True # pass만 쓰겠다는 플래그 (최우선 적용)
-apply_pass_only = False
+apply_pass_only = True # pass만 쓰겠다는 플래그 (최우선 적용)
+# apply_pass_only = False
 
-exclude_filtered_mut = True # pass, common만 쓰겠다는 플래그
-# exclude_filtered_mut = False
+# exclude_filtered_mut = True # pass, common만 쓰겠다는 플래그
+exclude_filtered_mut = False
 
-is_inc_germline = True # True로 두면 pass, common에 germline tag를 추가로 씀
-# is_inc_germline = False
+# is_inc_germline = True # True로 두면 pass, common에 germline tag를 추가로 씀
+is_inc_germline = False
 
 is_showing_venn = True
 
-# is_just_exonic = True
-is_just_exonic = False
+is_just_exonic = True
+# is_just_exonic = False
 
-# is_just_showing_venn = True
-is_just_showing_venn = False
+is_just_showing_venn = True
+# is_just_showing_venn = False
 
 
 coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Nonstop_Mutation', 'Frame_Shift_Del', \

@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from glob import glob
 
-input_maf_dir = r'E:/UTUC_data/gdc_hg38/maf/1st_lynch/DP_AF_filtered_maf'
+input_maf_dir = r'E:/UTUC_data/meskit/re_pyclone/maf/1st'
 input_format = '*.maf'
 
 output_suffix = '_exonic.maf'
