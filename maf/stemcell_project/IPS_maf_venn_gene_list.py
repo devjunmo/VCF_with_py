@@ -1,4 +1,4 @@
-from cv2 import detail_SeamFinder
+# from cv2 import detail_SeamFinder
 import venn
 import os
 from glob import glob
@@ -25,7 +25,7 @@ import numpy as np
 # input_dir = r'E:/UTUC_data/gdc_hg38/germline/maf/LG_N'
 # input_dir = r'E:/stemcell/maf/hg38_gdc/mt_sample/29A/Tera/DP_AF_filtered_maf'
 # input_dir = r'E:/stemcell/maf/hg38_gdc/whole_samples/DP_AF_filtered_maf/I45D_T6'
-input_dir = r'E:/stemcell/maf/hg38_gdc/mt_sample/Tera'
+input_dir = r'/myData/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf/exonic_maf/T18'
 
 
 input_format = r'*.maf'
@@ -52,7 +52,7 @@ output_dir_name = r'exclude_filterTag_stem'
 # output_name = r'hiPS29_AB_comp.xlsx'
 # output_name = r'29B_Tera_comp.xlsx'
 # output_name = r'29_clone_comp.xlsx'
-output_name = r'T19I36C_comp.xlsx'
+output_name = r'T18I65C_comp.xlsx'
 
 
 output_dir = os.path.join(input_dir, output_dir_name)
@@ -176,7 +176,7 @@ for i in range(len(input_lst)):
     # print(maf_df)
 
 
-    maf_count_dict[t_name] = dict()
+    maf_count_dict[t_name] = dict() # 딕셔너리 안에 샘플별로 또 딕셔너리
 
     for raw_row in maf_df_for_dict.itertuples(index=False, name=None):
         
@@ -278,7 +278,7 @@ if is_showing_venn:
 if is_just_showing_venn:
     exit(0)
 
-############################# 여기서 부터 클래스화 시켜야 함 ################################################
+#############################################################################
 
 
 from itertools import chain, combinations

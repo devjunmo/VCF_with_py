@@ -2,9 +2,13 @@
 import pandas as pd
 import os
 from glob import glob
+from jun_tools import jun_mtd as jm  # pip install YjmTools
 
-input_maf_dir = r'E:/UTUC_data/meskit/re_pyclone/maf/1st'
+
+input_maf_dir = r'/myData/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf'
 input_format = '*.maf'
+output_dir_name = 'exonic_maf'
+output_dir = jm.set_output_dir(input_maf_dir, output_dir_name)
 
 output_suffix = '_exonic.maf'
 
@@ -35,7 +39,7 @@ for i in range(len(input_maf_lst)):
 
     print(out_name)
 
-    out_path = os.path.join(input_maf_dir, out_name)
+    out_path = os.path.join(output_dir, out_name)
 
     exoic_df.to_csv(out_path, sep='\t', index=False)
     
