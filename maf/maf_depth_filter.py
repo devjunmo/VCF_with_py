@@ -18,7 +18,7 @@ pd.set_option('display.max_seq_items', None)
 # input_dir = r'D:/junmo/wd/utuc/maf/rmhd_maf/mutect2/sample2/'
 # input_dir = r'E:/stemcell_ips/gdc/clone/hips66/66C_muthap/filter_mut_hap_merge'
 # input_dir = r'E:/UTUC_data/gdc_hg38/germline/maf/LG_N'
-input_dir = r'/myData/stemcell/somatic_analysis/maf/mutect2'
+input_dir = r'E:/stemcell/VQSR_MAF'
 
 
 
@@ -51,7 +51,7 @@ if os.path.isdir(output_dir) is False:
 
 
 input_maf_lst = glob(os.path.join(input_dir, input_format))
-print(input_maf_lst)
+# print(input_maf_lst)
 
 
 for input_maf in input_maf_lst:
@@ -120,7 +120,7 @@ for input_maf in input_maf_lst:
 
 
     print(maf_df.shape)
-    print(maf_df)
+    # print(maf_df)
 
     
 

@@ -1,18 +1,16 @@
 
-tmp_lst = ['my_1', 'my_2']
 
-# tmp_lst = list(map(split, ))
+import pandas as pd
 
+# fruit_dict = {
+#     3: ['apple', 12],
+#     2: ['banana', 11],
+#     6: ['mango', 10]}
 
-tmp_lst = [c.split('_')[0] for c in tmp_lst]
+fruit_dict = {
+    3: 'apple:10',
+    2: 'banana, 11',
+    6: 'mango, 10'}
 
-print(tmp_lst)
-
-
-
-in_test_lst = ['apple', 'banana', 'cherry']
-
-if 'apple' not in in_test_lst:
-    print('사과는 있다')
-else:
-    print('사과는 없다')
+print(pd.DataFrame(list(fruit_dict.items()),
+                   columns=['Quantity', 'FruitName']))
