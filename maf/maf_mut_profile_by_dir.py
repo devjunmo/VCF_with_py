@@ -6,60 +6,64 @@ from jun_tools import jun_mtd as jm  # pip install YjmTool
 import os
 
 
+
+
 # 디렉토리의 마프파일 가져오기
 # {Tumor_id: [N_id, row_count]} 딕셔너리 만들기
 
 
-# input_dir = r"E:/stemcell/somatic_analysis/maf/vardict/DP_AF_filtered_maf/exonic_maf/origin"
-# input_format = r"*.maf"
-# input_lst = jm.get_input_path_list(input_dir, input_format, False)
+# 하나의 디렉토리내 파일들 플로팅
 
-# output_dir_name = r"comp_result"
-# output_dir = jm.set_output_dir(input_dir, output_dir_name)
+input_dir = r"E:/stemcell/somatic_analysis/maf/vardict/DP_AF_filtered_maf/exonic_maf/origin"
+input_format = r"*.maf"
+input_lst = jm.get_input_path_list(input_dir, input_format, False)
 
-
-# mutation_profile_dict = dict()
-
-# mut_prof_df = pd.DataFrame(columns=['Origin', 'mut_count'])
+output_dir_name = r"comp_result"
+output_dir = jm.set_output_dir(input_dir, output_dir_name)
 
 
-# def mutation_profile():
-#     pass
+mutation_profile_dict = dict()
+
+mut_prof_df = pd.DataFrame(columns=['Origin', 'mut_count'])
 
 
-# def logical_profile():
-#     pass
+def mutation_profile():
+    pass
 
 
-# for i in range(len(input_lst)):
-#     input_maf_df = pd.read_csv(input_lst[i], sep='\t')
-#     # print(input_maf_df)
-#     row_count = input_maf_df.shape[0]
-#     t_id = input_maf_df['Tumor_Sample_Barcode'][0]
-#     n_id = input_maf_df['Matched_Norm_Sample_Barcode'][0]
-
-#     # mutation_profile[t_id] = n_id + ':' + row_count
-
-#     mut_prof_df.loc[t_id] = [n_id, row_count]
-
-# print(mut_prof_df)
-
-# sns.set(font_scale=1)
-
-# sns.barplot(data=mut_prof_df,
-#             x=mut_prof_df.index,
-#             y="mut_count",
-#             hue="Origin")
-
-# plt.legend(loc=2, prop={'size': 15})
-# # plt.xticks(rotation=-90)
-# plt.show()
+def logical_profile():
+    pass
 
 
+for i in range(len(input_lst)):
+    input_maf_df = pd.read_csv(input_lst[i], sep='\t')
+    # print(input_maf_df)
+    row_count = input_maf_df.shape[0]
+    t_id = input_maf_df['Tumor_Sample_Barcode'][0]
+    n_id = input_maf_df['Matched_Norm_Sample_Barcode'][0]
+
+    # mutation_profile[t_id] = n_id + ':' + row_count
+
+    mut_prof_df.loc[t_id] = [n_id, row_count]
+
+print(mut_prof_df)
+
+sns.set(font_scale=1)
+
+sns.barplot(data=mut_prof_df,
+            x=mut_prof_df.index,
+            y="mut_count",
+            hue="Origin")
+
+plt.legend(loc=2, prop={'size': 15})
+# plt.xticks(rotation=-90)
+plt.show()
 
 
 
 
+
+# 디렉토리 구조로 그룹핑
 
 root_dir = r"E:/stemcell/somatic_analysis/maf/vardict/DP_AF_filtered_maf/exonic_maf/mtmut"
 input_format = r"*.maf"

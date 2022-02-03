@@ -5,13 +5,15 @@ from glob import glob
 from jun_tools import jun_mtd as jm  # pip install YjmTools
 
 
-input_maf_dir = r'E:/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf'
+input_maf_dir = r'E:/stemcell/VQSR_MAF/DP_AF_filtered_maf'
 input_format = '*.maf'
+# output_dir_name = 'exonic_maf_inc_slient'
 output_dir_name = 'exonic_maf'
 output_dir = jm.set_output_dir(input_maf_dir, output_dir_name)
 
 output_suffix = '_exonic.maf'
 
+# is_inc_slient = True
 is_inc_slient = False
 
 coding_region_lst = ['Missense_Mutation', 'Nonsense_Mutation', 'Nonstop_Mutation', 'Frame_Shift_Del', \
