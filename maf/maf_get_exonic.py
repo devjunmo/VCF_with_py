@@ -5,7 +5,7 @@ from glob import glob
 from jun_tools import jun_mtd as jm  # pip install YjmTools
 
 
-input_maf_dir = r'E:/stemcell/VQSR_MAF/DP_AF_filtered_maf'
+input_maf_dir = r'E:/stemcell/somatic_analysis/maf/tmp/DP_AF_filtered_maf'
 input_format = '*.maf'
 # output_dir_name = 'exonic_maf_inc_slient'
 output_dir_name = 'exonic_maf'

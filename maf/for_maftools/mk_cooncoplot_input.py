@@ -14,16 +14,17 @@ from typing import List, Tuple, Dict, Union
 from typing_extensions import Final
 
 
-input_dir = r'E:/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf/exonic_maf'
+# input_dir = r'E:/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf/exonic_maf/diff_comp'
+input_dir =r'E:/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf/Diff_whole_regions'
 input_format = r"*.maf"
 
-cohort_info_path = r'E:/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf/exonic_maf/cohort_comp/IPS_cohort_info.csv'
+cohort_info_path = r'E:/stemcell/somatic_analysis/maf/mutect2/DP_AF_filtered_maf/exonic_maf/diff_comp/diff_cohort_info.csv'
 
 input_maf_lst = jm.get_input_path_list(input_dir, input_format, False)
 
 output_dir_name = 'cohort_comp'
 output_dir = jm.set_output_dir(input_dir, output_dir_name)
-output_maf_name = 'ips_cohort_maf_for_cooncoplot.maf'
+output_maf_name = 'diff_cohort_for_oncoplot.maf'
 
 # print(input_lst)
 
